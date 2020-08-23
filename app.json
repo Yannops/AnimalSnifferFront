@@ -1,0 +1,12 @@
+{
+  "name": "AnimalSniffer",
+  "displayName": "AnimalSniffer",
+  "expo": {
+    "name": "AnimalSniffer",
+    "slug": "AnimalSniffer",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
