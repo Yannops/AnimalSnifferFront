@@ -1,8 +1,16 @@
 import React from 'react';
 import { Text, TouchableOpacity, View, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 const TelaAuth = () => {
+  const navigation = useNavigation();
+
+
+  async function handleNavigateToMap() {
+    navigation.navigate('TelaPrincipal');
+  }
+
   return (
     <>
       <View style={styles.header}>
@@ -17,7 +25,7 @@ const TelaAuth = () => {
           <Text style={styles.textInput}>Senha</Text>
           <TextInput secureTextEntry={true} placeholder="Informe sua Senha..." style={styles.inputs} />
         </View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleNavigateToMap}>
           <Text style={styles.buttonText}>ACESSAR</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>

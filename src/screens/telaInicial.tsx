@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     color: 'green',
     textAlign: 'center',
     fontWeight: '500',
+    fontFamily: 'Cinzel_700Bold',
   },
 
   buttonContainer: {
@@ -69,6 +70,7 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
     fontWeight: '600',
+    fontFamily: 'Cinzel_700Bold',
   },
 });
 
