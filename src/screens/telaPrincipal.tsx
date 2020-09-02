@@ -32,8 +32,8 @@ const TelaPrincipal = () => {
         navigation.goBack();
     }
 
-    async function handleAlert() {
-        alert('funcionando!');
+    async function handleNavigateToNewAnimal() {
+        navigation.navigate('TelaCadastroAni');
     }
 
     return (
@@ -41,7 +41,7 @@ const TelaPrincipal = () => {
             <StatusBar barStyle="light-content" />
             {initialPosition[0] !== 0 && (
                 <MapView
-                    onPress={() => handleAlert()}
+                    onPress={() => handleNavigateToNewAnimal()}
                     style={styles.map}
                     initialRegion={{
                         latitude: initialPosition[0],
