@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, StyleSheet, TouchableOpacity, View, KeyboardAvoidingView, Platform, Picker } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import { RadioButton } from 'react-native-paper';
 
 const TelaCadastroAni = () => {
     const navigation = useNavigation();
+    const [ratioValue, setRatioValue] = useState('Masculino');
 
     function handleNavigateBack() {
         navigation.goBack();
@@ -19,25 +21,37 @@ const TelaCadastroAni = () => {
                 <View style={styles.viewContainer}>
                     <Text style={styles.textInput}>Tipo de Animal</Text>
                     <Picker>
-                        <Picker.Item label="Cão" value="Cachorro"/>
+                        <Picker.Item label="Cão" value="Cachorro" />
                         <Picker.Item label="Gato" value="Gato" />
                     </Picker>
                 </View>
                 <View style={styles.viewContainer}>
                     <Text style={styles.textInput}>Raça</Text>
                     <Picker>
-                        
+
                     </Picker>
                 </View>
                 <View style={styles.viewContainer}>
-                    <Text style={styles.textInput}>Sexo</Text>
-                    <TextInput keyboardType="email-address" placeholder="Informe seu E-mail..." style={styles.inputs} />
+                    <View style={styles.ratioView}>
+                        <Text style={{ ...styles.textInput, marginBottom: 15 }}>Sexo</Text>
+                        <Text style={styles.ratioGroupAnswer}>Selecionado: {ratioValue}</Text>
+                    </View>
+                    <View style={styles.ratioGroup}>
+                        <RadioButton.Group value={ratioValue} onValueChange={value => setRatioValue(value)}>
+                            <Text style={styles.ratioGroupText}>Masculino</Text>
+                            <RadioButton value="Masculino" />
+                            <Text style={styles.ratioGroupText}>Feminino</Text>
+                            <RadioButton value="Feminino" />
+                            <Text style={styles.ratioGroupText}>Indefinido</Text>
+                            <RadioButton value="Indefinido" />
+                        </RadioButton.Group>
+                    </View>
                 </View>
                 <View style={styles.viewContainer}>
                     <Text style={styles.textInput}>Descrição do Animal</Text>
                     <TextInput secureTextEntry={true} placeholder="Descreva Características do Animal..." style={styles.inputTextArea} />
                 </View>
-                <TouchableOpacity style={{ ...styles.button, backgroundColor: '#7D7B7A',  }}>
+                <TouchableOpacity style={{ ...styles.button, backgroundColor: '#7D7B7A', }}>
                     <Text style={styles.buttonText}>Escolher Imagem</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={handleNavigateBack}>
@@ -78,7 +92,8 @@ const styles = StyleSheet.create({
     viewContainer: {
         width: '100%',
         marginLeft: 80,
-        marginTop: 0
+        marginTop: 0,
+        marginBottom: 10
     },
 
     textInput: {
@@ -122,6 +137,34 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         paddingTop: 10
     },
+
+    ratioGroup: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '80%',
+        height: 60,
+        borderRadius: 8,
+        backgroundColor: '#fff',
+        paddingTop: 10,
+        paddingLeft: 10,
+
+    },
+
+    ratioGroupText: {
+        fontSize: 15,
+        fontWeight: '400',
+        fontFamily: 'Cinzel_700Bold',
+        marginTop: 12
+    },
+
+    ratioView: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
+    },
+
+    ratioGroupAnswer: {
+        fontSize: 14,
+    }
 });
 
 export default TelaCadastroAni;
