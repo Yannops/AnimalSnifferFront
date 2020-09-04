@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
 
   headerText: {
     fontSize: 20,
-    fontWeight: '800',
+    fontFamily: 'Cinzel_700Bold',
     color: 'rgba(0, 0, 0, .6)',
     paddingTop: 30,
     textAlign: 'center',
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
 
   textInput: {
     fontSize: 20,
-    fontWeight: '600',
+    fontFamily: 'Cinzel_700Bold'
   },
 
   inputs: {
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    fontWeight: '600',
+    fontFamily: 'Cinzel_700Bold',
     textAlign: 'center',
     paddingTop: 10
   },

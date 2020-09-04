@@ -44,11 +44,11 @@ const styles = StyleSheet.create({
 
   headerText: {
     fontSize: 20,
-    fontWeight: '800',
     color: 'rgba(0, 0, 0, .6)',
     paddingTop: 30,
     textAlign: 'center',
-    letterSpacing: 3
+    letterSpacing: 3,
+    fontFamily: 'Cinzel_700Bold'
   },
 
   container: {
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
 
   textInput: {
     fontSize: 20,
-    fontWeight: '600',
+    fontFamily: 'Cinzel_700Bold'
   },
 
   inputs: {
@@ -88,11 +88,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     margin: 10,
     width: 250,
-    height: 50
+    height: 50,
   },
 
   buttonText: {
-    fontWeight: '600',
+    fontFamily: 'Cinzel_700Bold',
     textAlign: 'center',
     paddingTop: 10
   },

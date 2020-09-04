@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Alert, StatusBar, Text, View } from 'react-native';
+import { StyleSheet, Alert, StatusBar, Image, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import * as Location from 'expo-location';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import Icon from '@expo/vector-icons/build/AntDesign';
+import Icon from '@expo/vector-icons/build/FontAwesome';
 
 const TelaPrincipal = () => {
     const navigation = useNavigation();
@@ -32,7 +31,7 @@ const TelaPrincipal = () => {
         navigation.goBack();
     }
 
-    async function handleNavigateToNewAnimal() {
+    function handleNavigateToNewAnimal() {
         navigation.navigate('TelaCadastroAni');
     }
 
@@ -41,7 +40,6 @@ const TelaPrincipal = () => {
             <StatusBar barStyle="light-content" />
             {initialPosition[0] !== 0 && (
                 <MapView
-                    onPress={() => handleNavigateToNewAnimal()}
                     style={styles.map}
                     initialRegion={{
                         latitude: initialPosition[0],
@@ -53,8 +51,20 @@ const TelaPrincipal = () => {
                 >
                     <TouchableOpacity onPress={handleNavigateBack} />
                     <Marker coordinate={{ latitude: initialPosition[0], longitude: initialPosition[1] }}>
-                        <Icon name="gitlab" size={30} color="#FFF" />
+                        <Image source={require('../../assets/dog.png')} />
                     </Marker>
+                    <Marker coordinate={{ latitude: initialPosition[0] + 0.01, longitude: initialPosition[1] }}>
+                        <Image source={require('../../assets/cat.png')} />
+                    </Marker>
+                    <Marker coordinate={{ latitude: initialPosition[0] + 0.11, longitude: initialPosition[1] }}>
+                        <Image source={require('../../assets/dog.png')} />
+                    </Marker>
+                    <TouchableOpacity onPress={handleNavigateBack} style={styles.backButton}>
+                        <Icon name="arrow-left" size={50} color="#4583ff" />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleNavigateToNewAnimal} style={styles.addAnimalButton}>
+                        <Icon name="plus-circle" size={50} color="#4583ff" />
+                    </TouchableOpacity>
                 </MapView>
             )}
         </>
@@ -79,8 +89,18 @@ const styles = StyleSheet.create({
         paddingTop: 2
     },
 
-    goBackContainer: {
-        flexDirection: "row",
+    backButton: {
+        position: 'absolute',
+        zIndex: 1,
+        top: 70,
+        left: 20
+    },
+
+    addAnimalButton: {
+        position: 'absolute',
+        zIndex: 1,
+        top: 740,
+        left: 340
     },
 });
 

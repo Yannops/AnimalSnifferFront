@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, TouchableOpacity, View, KeyboardAvoidingView, Platform, Picker } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { TextInput, ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { RadioButton } from 'react-native-paper';
 
@@ -17,47 +17,68 @@ const TelaCadastroAni = () => {
             <View style={styles.header}>
                 <Text style={styles.headerText}>Cadastro de Animal</Text>
             </View>
-            <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-                <View style={styles.viewContainer}>
-                    <Text style={styles.textInput}>Tipo de Animal</Text>
-                    <Picker>
-                        <Picker.Item label="Cão" value="Cachorro" />
-                        <Picker.Item label="Gato" value="Gato" />
-                    </Picker>
-                </View>
-                <View style={styles.viewContainer}>
-                    <Text style={styles.textInput}>Raça</Text>
-                    <Picker>
-
-                    </Picker>
-                </View>
-                <View style={styles.viewContainer}>
-                    <View style={styles.ratioView}>
-                        <Text style={{ ...styles.textInput, marginBottom: 15 }}>Sexo</Text>
-                        <Text style={styles.ratioGroupAnswer}>Selecionado: {ratioValue}</Text>
+            <ScrollView>
+                <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? 'padding' : undefined}>
+                    <View style={styles.viewContainer}>
+                        <Text style={styles.textInput}>Tipo de Animal</Text>
+                        <Picker style={styles.Picker}>
+                            <Picker.Item label="Cão" value="Cachorro" />
+                            <Picker.Item label="Gato" value="Gato" />
+                            <Picker.Item label="Cão" value="Cachorro" />
+                            <Picker.Item label="Gato" value="Gato" />
+                            <Picker.Item label="Cão" value="Cachorro" />
+                            <Picker.Item label="Gato" value="Gato" />
+                            <Picker.Item label="Cão" value="Cachorro" />
+                            <Picker.Item label="Gato" value="Gato" />
+                            <Picker.Item label="Cão" value="Cachorro" />
+                            <Picker.Item label="Gato" value="Gato" />
+                        </Picker>
                     </View>
-                    <View style={styles.ratioGroup}>
-                        <RadioButton.Group value={ratioValue} onValueChange={value => setRatioValue(value)}>
-                            <Text style={styles.ratioGroupText}>Masculino</Text>
-                            <RadioButton value="Masculino" />
-                            <Text style={styles.ratioGroupText}>Feminino</Text>
-                            <RadioButton value="Feminino" />
-                            <Text style={styles.ratioGroupText}>Indefinido</Text>
-                            <RadioButton value="Indefinido" />
-                        </RadioButton.Group>
+                    <View style={styles.viewContainer}>
+                        <Text style={styles.textInput}>Raça</Text>
+                        <Picker style={styles.Picker}>
+                            <Picker.Item label="Cão" value="Cachorro" />
+                            <Picker.Item label="Gato" value="Gato" />
+                            <Picker.Item label="Cão" value="Cachorro" />
+                            <Picker.Item label="Gato" value="Gato" />
+                            <Picker.Item label="Cão" value="Cachorro" />
+                            <Picker.Item label="Gato" value="Gato" />
+                            <Picker.Item label="Cão" value="Cachorro" />
+                            <Picker.Item label="Gato" value="Gato" />
+                            <Picker.Item label="Cão" value="Cachorro" />
+                            <Picker.Item label="Gato" value="Gato" />
+                            <Picker.Item label="Cão" value="Cachorro" />
+                            <Picker.Item label="Gato" value="Gato" />
+                        </Picker>
                     </View>
-                </View>
-                <View style={styles.viewContainer}>
-                    <Text style={styles.textInput}>Descrição do Animal</Text>
-                    <TextInput secureTextEntry={true} placeholder="Descreva Características do Animal..." style={styles.inputTextArea} />
-                </View>
-                <TouchableOpacity style={{ ...styles.button, backgroundColor: '#7D7B7A', }}>
-                    <Text style={styles.buttonText}>Escolher Imagem</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={handleNavigateBack}>
-                    <Text style={styles.buttonText}>CADASTRAR</Text>
-                </TouchableOpacity>
-            </KeyboardAvoidingView>
+                    <View style={styles.viewContainer}>
+                        <View style={styles.ratioView}>
+                            <Text style={{ ...styles.textInput, marginBottom: 15 }}>Sexo</Text>
+                            <Text style={{ ...styles.ratioGroupAnswer, marginLeft: 150 }}>Selecionado: {ratioValue}</Text>
+                        </View>
+                        <View style={styles.ratioGroup}>
+                            <RadioButton.Group value={ratioValue} onValueChange={value => setRatioValue(value)}>
+                                <Text style={styles.ratioGroupText}>Masculino</Text>
+                                <RadioButton value="Masculino" />
+                                <Text style={styles.ratioGroupText}>Feminino</Text>
+                                <RadioButton value="Feminino" />
+                                <Text style={styles.ratioGroupText}>Indefinido</Text>
+                                <RadioButton value="Indefinido" />
+                            </RadioButton.Group>
+                        </View>
+                    </View>
+                    <View style={styles.viewContainer}>
+                        <Text style={styles.textInput}>Descrição do Animal</Text>
+                        <TextInput placeholder="Descreva Características do Animal..." style={styles.inputTextArea} />
+                    </View>
+                    <TouchableOpacity style={{ ...styles.button, backgroundColor: '#7D7B7A', }}>
+                        <Text style={styles.buttonText}>Escolher Imagem</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={handleNavigateBack}>
+                        <Text style={styles.buttonText}>CADASTRAR</Text>
+                    </TouchableOpacity>
+                </KeyboardAvoidingView>
+            </ScrollView>
         </>
     );
 }
@@ -73,7 +94,7 @@ const styles = StyleSheet.create({
 
     headerText: {
         fontSize: 20,
-        fontWeight: '800',
+        fontFamily: 'Cinzel_700Bold',
         color: 'rgba(0, 0, 0, .6)',
         paddingTop: 30,
         textAlign: 'center',
@@ -82,10 +103,10 @@ const styles = StyleSheet.create({
 
     container: {
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         width: '100%',
-        height: '100%',
+        height: 1350,
         backgroundColor: 'rgba(0, 0, 0, .2)'
     },
 
@@ -93,23 +114,19 @@ const styles = StyleSheet.create({
         width: '100%',
         marginLeft: 80,
         marginTop: 0,
-        marginBottom: 10
+        marginBottom: 50
     },
 
     textInput: {
         fontSize: 20,
-        fontWeight: '600',
+        fontFamily: 'Cinzel_700Bold',
+        marginTop: 25
     },
 
-    inputs: {
+    Picker: {
         width: '80%',
-        height: 50,
-        fontSize: 20,
-        backgroundColor: '#fff',
-        borderRadius: 8,
-        marginBottom: 30,
-        marginTop: 5,
-        paddingLeft: 5
+        height: 140,
+        justifyContent: 'center',
     },
 
     inputTextArea: {
@@ -120,7 +137,8 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         marginBottom: 30,
         marginTop: 5,
-        paddingLeft: 5
+        paddingLeft: 5,
+        paddingBottom: 55
     },
 
     button: {
@@ -133,9 +151,9 @@ const styles = StyleSheet.create({
     },
 
     buttonText: {
-        fontWeight: '600',
+        fontFamily: 'Cinzel_700Bold',
         textAlign: 'center',
-        paddingTop: 10
+        paddingTop: 8
     },
 
     ratioGroup: {
@@ -159,11 +177,11 @@ const styles = StyleSheet.create({
 
     ratioView: {
         flexDirection: 'row',
-        justifyContent: 'space-evenly'
     },
 
     ratioGroupAnswer: {
         fontSize: 14,
+        paddingTop: 25
     }
 });
 
