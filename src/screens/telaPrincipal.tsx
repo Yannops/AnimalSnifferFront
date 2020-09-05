@@ -35,6 +35,10 @@ const TelaPrincipal = () => {
         navigation.navigate('TelaCadastroAni');
     }
 
+    function handleNavigateToAnimalSelec() {
+        navigation.navigate('TelaAnimalSelec');
+    }
+
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -50,13 +54,13 @@ const TelaPrincipal = () => {
                     mapType="hybrid"
                 >
                     <TouchableOpacity onPress={handleNavigateBack} />
-                    <Marker coordinate={{ latitude: initialPosition[0], longitude: initialPosition[1] }}>
+                    <Marker onPress={handleNavigateToAnimalSelec} coordinate={{ latitude: initialPosition[0], longitude: initialPosition[1] }}>
                         <Image source={require('../../assets/dog.png')} />
                     </Marker>
-                    <Marker coordinate={{ latitude: initialPosition[0] + 0.01, longitude: initialPosition[1] }}>
+                    <Marker onPress={handleNavigateToAnimalSelec} coordinate={{ latitude: initialPosition[0] + 0.01, longitude: initialPosition[1] }}>
                         <Image source={require('../../assets/cat.png')} />
                     </Marker>
-                    <Marker coordinate={{ latitude: initialPosition[0] + 0.11, longitude: initialPosition[1] }}>
+                    <Marker onPress={handleNavigateToAnimalSelec} coordinate={{ latitude: initialPosition[0] + 0.11, longitude: initialPosition[1] }}>
                         <Image source={require('../../assets/dog.png')} />
                     </Marker>
                     <TouchableOpacity onPress={handleNavigateBack} style={styles.backButton}>
