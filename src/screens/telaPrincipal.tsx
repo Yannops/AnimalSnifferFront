@@ -3,7 +3,6 @@ import { StyleSheet, Alert, StatusBar, Image, TouchableOpacity } from 'react-nat
 import MapView, { Marker } from 'react-native-maps';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import * as Location from 'expo-location';
-import { FontAwesome, Entypo } from '@expo/vector-icons';
 
 const TelaPrincipal = () => {
     const navigation = useNavigation();
@@ -19,7 +18,7 @@ const TelaPrincipal = () => {
                 return;
             }
 
-            const location = await Location.getCurrentPositionAsync();
+            const location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
             const { latitude, longitude } = location.coords;
 
             setInitialPosition([latitude, longitude]);
