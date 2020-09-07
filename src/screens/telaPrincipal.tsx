@@ -47,13 +47,13 @@ const TelaPrincipal = () => {
         <>
             <StatusBar barStyle="light-content" />
             <TouchableOpacity onPress={handleNavigateBack} style={styles.backButton}>
-                <FontAwesome name="arrow-left" size={50} color="#ffffff" />
+                <Image source={require('../../assets/back.png')} />
             </TouchableOpacity>
             <TouchableOpacity onPress={handleNavigateToNewAnimal} style={styles.addAnimalButton}>
-                <FontAwesome name="plus-circle" size={50} color="#ffffff" />
+                <Image  source={require('../../assets/add.png')} />
             </TouchableOpacity>
             <TouchableOpacity onPress={handleNavigateToStatisticData} style={styles.seeStatisticData}>
-                <Entypo name="info" size={50} color="#ffffff" />
+                <Image source={require('../../assets/info.png')} />
             </TouchableOpacity>
             {initialPosition[0] !== 0 && (
                 <MapView

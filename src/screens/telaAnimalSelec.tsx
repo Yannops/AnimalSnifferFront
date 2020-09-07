@@ -10,6 +10,10 @@ const TelaAnimalSelec = () => {
         navigation.goBack();
     }
 
+    function handleNavigateToDetail() {
+        navigation.navigate('TelaDetalhesAnimal');
+    }
+
     function handleIncrementAvaliarAnimal() {
         setAvaliar(avaliar + 1);
     }
@@ -26,7 +30,7 @@ const TelaAnimalSelec = () => {
             </View>
             <View style={styles.container}>
                 <TouchableOpacity onPress={handleNavigateBack}></TouchableOpacity>
-                <TouchableOpacity style={{ ...styles.button, backgroundColor: "#9fff80" }}>
+                <TouchableOpacity style={{ ...styles.button, backgroundColor: "#9fff80" }} onPress={handleNavigateToDetail}>
                     <Text style={styles.buttonText}>Visualizar Detalhes</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ ...styles.button, backgroundColor: "#99b3ff" }} >

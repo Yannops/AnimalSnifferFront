@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, TouchableOpacity, View, KeyboardAvoidingView, Platform, Picker } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, View, KeyboardAvoidingView, Platform, Picker, AsyncStorage, Image } from 'react-native';
 import { TextInput, ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { RadioButton } from 'react-native-paper';
@@ -7,9 +7,15 @@ import { RadioButton } from 'react-native-paper';
 const TelaCadastroAni = () => {
     const navigation = useNavigation();
     const [ratioValue, setRatioValue] = useState('Masculino');
+    const [fotoAnimal, setFotoAnimal] = useState(null);
+    setFotoAnimal(AsyncStorage.getItem('fotoAnimal'));
 
     function handleNavigateBack() {
         navigation.goBack();
+    }
+
+    function handleOpenCamera() {
+        navigation.navigate('TelaCamera');
     }
 
     return (
@@ -71,7 +77,10 @@ const TelaCadastroAni = () => {
                         <Text style={styles.textInput}>Descrição do Animal</Text>
                         <TextInput placeholder="Descreva Características do Animal..." style={styles.inputTextArea} />
                     </View>
-                    <TouchableOpacity style={{ ...styles.button, backgroundColor: '#7D7B7A', }}>
+                    {fotoAnimal &&
+                        <Image style={styles.imagemContainer} source={fotoAnimal} />
+                    }
+                    <TouchableOpacity onPress={handleOpenCamera} style={{ ...styles.button, backgroundColor: '#7D7B7A', }}>
                         <Text style={styles.buttonText}>Escolher Imagem</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={handleNavigateBack}>
@@ -108,6 +117,12 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 1350,
         backgroundColor: 'rgba(0, 0, 0, .2)'
+    },
+
+    imagemContainer: {
+        width: '80%',
+        height: 200,
+        resizeMode: 'cover'
     },
 
     viewContainer: {
