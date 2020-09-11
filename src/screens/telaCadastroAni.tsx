@@ -1,14 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, StyleSheet, TouchableOpacity, View, KeyboardAvoidingView, Platform, Picker, AsyncStorage, Image } from 'react-native';
 import { TextInput, ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import * as Permissions from 'expo-permissions';
+import * as ImagePicker from 'expo-image-picker';
 import { RadioButton } from 'react-native-paper';
 
 const TelaCadastroAni = () => {
     const navigation = useNavigation();
     const [ratioValue, setRatioValue] = useState('Masculino');
     const [fotoAnimal, setFotoAnimal] = useState(null);
-    setFotoAnimal(AsyncStorage.getItem('fotoAnimal'));
+    const [haspermission, setHaspermission] = useState(null);
+
+    useEffect(() => {
+        (async () => {
+            const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+            setHaspermission(status === 'granted');
+        })();
+    }, []);
+
+    if (haspermission === null) {
+        return <View />
+    }
+
+    if (haspermission === false) {
+        return <Text>Acesso Negado!</Text>
+    }
 
     function handleNavigateBack() {
         navigation.goBack();
@@ -16,6 +33,22 @@ const TelaCadastroAni = () => {
 
     function handleOpenCamera() {
         navigation.navigate('TelaCamera');
+    }
+
+    async function pickImage() {
+        try {
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.All,
+                allowsEditing: true,
+                aspect: [4, 3],
+                quality: 1,
+            });
+            if (!result.cancelled) {
+                setFotoAnimal({ image: result.uri });
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -80,8 +113,11 @@ const TelaCadastroAni = () => {
                     {fotoAnimal &&
                         <Image style={styles.imagemContainer} source={fotoAnimal} />
                     }
+                    <TouchableOpacity onPress={() => pickImage()} style={{ ...styles.button, backgroundColor: '#7D7B7A', }}>
+                        <Text style={styles.buttonText}>Abrir Galeria</Text>
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={handleOpenCamera} style={{ ...styles.button, backgroundColor: '#7D7B7A', }}>
-                        <Text style={styles.buttonText}>Escolher Imagem</Text>
+                        <Text style={styles.buttonText}>Abrir Câmera</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={handleNavigateBack}>
                         <Text style={styles.buttonText}>CADASTRAR</Text>
