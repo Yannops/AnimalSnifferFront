@@ -8,7 +8,7 @@ const TelaCamera = () => {
     const camRef = useRef(null);
     const [open, setOpen] = useState(false);
     const [type, setType] = useState(Camera.Constants.Type.back);
-    const [capturedPhoto, setCapturedPhoto] = useState(null);
+    const [capturedPhoto, setCapturedPhoto] = useState('');
     const [haspermission, setHaspermission] = useState(null);
     const navigation = useNavigation();
 
@@ -34,8 +34,10 @@ const TelaCamera = () => {
 
     async function takePicture() {
         if (camRef) {
-            const data = await camRef.current.takePictureAsync();
-            setCapturedPhoto(data.uri);
+            const data = await camRef.current.takePictureAsync({ 
+                base64: true
+            });
+            setCapturedPhoto(data.base64);
             setOpen(true);
         }
     }
@@ -47,7 +49,7 @@ const TelaCamera = () => {
     }
 
     function deleteImage() {
-        setCapturedPhoto(null);
+        setCapturedPhoto('');
         setOpen(false);
     }
 
@@ -69,10 +71,10 @@ const TelaCamera = () => {
                 <TouchableOpacity style={styles.button} onPress={takePicture}>
                     <FontAwesome name="camera" size={40} color="white"></FontAwesome>
                 </TouchableOpacity>
-                {capturedPhoto &&
+                {capturedPhoto !== '' ?
                     <Modal animationType="slide" transparent={false} visible={open}>
                         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                            <Image style={{ width: '100%', height: '100%', borderRadius: 20 }} source={{ uri: capturedPhoto }}/>
+                            <Image style={{ width: '100%', height: '100%', borderRadius: 20 }} source={{ uri: "data:image/png;base64," + capturedPhoto }}/>
                             <TouchableOpacity style={{ position: 'absolute', left: 70, top: 750 }} onPress={() => handlePutPhotoOnRegister()}>
                                 <FontAwesome name="check" size={50} color="green"></FontAwesome>
                             </TouchableOpacity>
@@ -81,6 +83,7 @@ const TelaCamera = () => {
                             </TouchableOpacity>
                         </View>
                     </Modal>
+                    : <Text>Nenhuma foto foi Tirada</Text>
                 }
             </Camera>
         </>

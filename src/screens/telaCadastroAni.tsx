@@ -9,7 +9,7 @@ import { RadioButton } from 'react-native-paper';
 const TelaCadastroAni = () => {
     const navigation = useNavigation();
     const [ratioValue, setRatioValue] = useState('Masculino');
-    const [fotoAnimal, setFotoAnimal] = useState(null);
+    const [fotoAnimal, setFotoAnimal] = useState("");
     const [haspermission, setHaspermission] = useState(null);
 
     useEffect(() => {
@@ -21,8 +21,10 @@ const TelaCadastroAni = () => {
 
     useEffect(() => {
         (async () => {
-            const foto = await AsyncStorage.getItem('fotoAnimal')
-            setFotoAnimal(foto);
+            const foto = await AsyncStorage.getItem('fotoAnimal');
+            if (foto) {
+                setFotoAnimal(foto);
+            }
         })();
     }, [fotoAnimal]);
 
@@ -44,13 +46,20 @@ const TelaCadastroAni = () => {
     }
 
     async function pickImage() {
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        });
-        setFotoAnimal({ fotoAnimal: result.uri });
+        try {
+            const result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                aspect: [4, 3],
+                base64: true,
+                quality: 1,
+            });
+            AsyncStorage.removeItem("fotoAnimal");
+            setFotoAnimal(result.base64);
+        } catch (e) {
+            console.log(e)
+        }
+
     }
 
     return (
@@ -112,8 +121,9 @@ const TelaCadastroAni = () => {
                         <Text style={styles.textInput}>Descrição do Animal</Text>
                         <TextInput placeholder="Descreva Características do Animal..." style={styles.inputTextArea} />
                     </View>
-                    {fotoAnimal &&
-                        <Image style={styles.imagemContainer} source={{ uri: fotoAnimal }}></Image>
+                    {fotoAnimal !== "" ?
+                        <Image style={styles.imagemContainer} source={{ uri: "data:image/png;base64," + fotoAnimal }}></Image>
+                        : null
                     }
                     <TouchableOpacity onPress={() => pickImage()} style={{ ...styles.button, backgroundColor: '#7D7B7A', }}>
                         <Text style={styles.buttonText}>Abrir Galeria</Text>
