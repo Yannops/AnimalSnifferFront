@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
 
     imagemContainer: {
         width: '80%',
-        height: 200,
+        height: 400,
         borderRadius: 8,
         marginTop: 10
     },

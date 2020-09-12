@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
 
   buttonContainer: {
-    marginBottom: 100,
+    marginBottom: 25,
   },
 
   button: {

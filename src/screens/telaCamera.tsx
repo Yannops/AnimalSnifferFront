@@ -40,8 +40,8 @@ const TelaCamera = () => {
         }
     }
 
-    function handlePutPhotoOnRegister() {
-        AsyncStorage.setItem('fotoAnimal', capturedPhoto);
+    async function handlePutPhotoOnRegister() {
+        await AsyncStorage.setItem('fotoAnimal', capturedPhoto);
         setOpen(false);
         navigation.goBack();
     }

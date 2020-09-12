@@ -19,6 +19,13 @@ const TelaCadastroAni = () => {
         })();
     }, []);
 
+    useEffect(() => {
+        (async () => {
+            const foto = await AsyncStorage.getItem('fotoAnimal')
+            setFotoAnimal(foto);
+        })();
+    }, [fotoAnimal]);
+
     if (haspermission === null) {
         return <View />
     }
@@ -28,6 +35,7 @@ const TelaCadastroAni = () => {
     }
 
     function handleNavigateBack() {
+        AsyncStorage.clear();
         navigation.goBack();
     }
 
@@ -36,19 +44,13 @@ const TelaCadastroAni = () => {
     }
 
     async function pickImage() {
-        try {
-            let result = await ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.All,
-                allowsEditing: true,
-                aspect: [4, 3],
-                quality: 1,
-            });
-            if (!result.cancelled) {
-                setFotoAnimal({ image: result.uri });
-            }
-        } catch (error) {
-            console.log(error);
-        }
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+        setFotoAnimal({ fotoAnimal: result.uri });
     }
 
     return (
@@ -56,7 +58,7 @@ const TelaCadastroAni = () => {
             <View style={styles.header}>
                 <Text style={styles.headerText}>Cadastro de Animal</Text>
             </View>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
                 <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? 'padding' : undefined}>
                     <View style={styles.viewContainer}>
                         <Text style={styles.textInput}>Tipo de Animal</Text>
@@ -111,7 +113,7 @@ const TelaCadastroAni = () => {
                         <TextInput placeholder="Descreva Características do Animal..." style={styles.inputTextArea} />
                     </View>
                     {fotoAnimal &&
-                        <Image style={styles.imagemContainer} source={fotoAnimal} />
+                        <Image style={styles.imagemContainer} source={{ uri: fotoAnimal }}></Image>
                     }
                     <TouchableOpacity onPress={() => pickImage()} style={{ ...styles.button, backgroundColor: '#7D7B7A', }}>
                         <Text style={styles.buttonText}>Abrir Galeria</Text>
@@ -151,14 +153,16 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         width: '100%',
-        height: 1350,
+        height: 1600,
         backgroundColor: 'rgba(0, 0, 0, .2)'
     },
 
     imagemContainer: {
         width: '80%',
-        height: 200,
-        resizeMode: 'cover'
+        height: 400,
+        resizeMode: 'cover',
+        borderRadius: 8,
+        marginBottom: 40,
     },
 
     viewContainer: {
