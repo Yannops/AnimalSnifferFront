@@ -5,12 +5,14 @@ import { useNavigation } from '@react-navigation/native';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import { RadioButton } from 'react-native-paper';
+const Cachorro = require('../raças/Cachorro.json');
 
 const TelaCadastroAni = () => {
     const navigation = useNavigation();
     const [ratioValue, setRatioValue] = useState('Masculino');
     const [fotoAnimal, setFotoAnimal] = useState("");
     const [haspermission, setHaspermission] = useState(null);
+    const cachorro = Cachorro;
 
     useEffect(() => {
         (async () => {
@@ -72,33 +74,18 @@ const TelaCadastroAni = () => {
                     <View style={styles.viewContainer}>
                         <Text style={styles.textInput}>Tipo de Animal</Text>
                         <Picker style={styles.Picker}>
-                            <Picker.Item label="Cão" value="Cachorro" />
-                            <Picker.Item label="Gato" value="Gato" />
-                            <Picker.Item label="Cão" value="Cachorro" />
-                            <Picker.Item label="Gato" value="Gato" />
-                            <Picker.Item label="Cão" value="Cachorro" />
-                            <Picker.Item label="Gato" value="Gato" />
-                            <Picker.Item label="Cão" value="Cachorro" />
-                            <Picker.Item label="Gato" value="Gato" />
-                            <Picker.Item label="Cão" value="Cachorro" />
-                            <Picker.Item label="Gato" value="Gato" />
+                            <Picker.Item value="0" label="Cão" />
+                            <Picker.Item value="1" label="Gato" />
                         </Picker>
                     </View>
                     <View style={styles.viewContainer}>
                         <Text style={styles.textInput}>Raça</Text>
                         <Picker style={styles.Picker}>
-                            <Picker.Item label="Cão" value="Cachorro" />
-                            <Picker.Item label="Gato" value="Gato" />
-                            <Picker.Item label="Cão" value="Cachorro" />
-                            <Picker.Item label="Gato" value="Gato" />
-                            <Picker.Item label="Cão" value="Cachorro" />
-                            <Picker.Item label="Gato" value="Gato" />
-                            <Picker.Item label="Cão" value="Cachorro" />
-                            <Picker.Item label="Gato" value="Gato" />
-                            <Picker.Item label="Cão" value="Cachorro" />
-                            <Picker.Item label="Gato" value="Gato" />
-                            <Picker.Item label="Cão" value="Cachorro" />
-                            <Picker.Item label="Gato" value="Gato" />
+                            {cachorro.map(cachorro => {
+                                return (
+                                    <Picker.Item key={cachorro.id} value={cachorro.id} label={cachorro.name} />
+                                );
+                            })}
                         </Picker>
                     </View>
                     <View style={styles.viewContainer}>
@@ -122,7 +109,7 @@ const TelaCadastroAni = () => {
                         <TextInput placeholder="Descreva Características do Animal..." style={styles.inputTextArea} />
                     </View>
                     {fotoAnimal !== "" ?
-                        <Image style={styles.imagemContainer} source={{ uri: "data:image/png;base64," + fotoAnimal }}></Image>
+                        <Image style={styles.imagemContainer} source={{ uri: "data:image/png;base64," + fotoAnimal }} />
                         : null
                     }
                     <TouchableOpacity onPress={() => pickImage()} style={{ ...styles.button, backgroundColor: '#7D7B7A', }}>

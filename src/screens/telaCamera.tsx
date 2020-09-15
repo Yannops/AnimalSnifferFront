@@ -34,7 +34,7 @@ const TelaCamera = () => {
 
     async function takePicture() {
         if (camRef) {
-            const data = await camRef.current.takePictureAsync({ 
+            const data = await camRef.current.takePictureAsync({
                 base64: true
             });
             setCapturedPhoto(data.base64);
@@ -57,7 +57,7 @@ const TelaCamera = () => {
         navigation.goBack();
     }
 
-
+    
     return (
         <>
             <Camera style={{ flex: 1 }} type={type} ref={camRef} >
@@ -74,7 +74,7 @@ const TelaCamera = () => {
                 {capturedPhoto !== '' ?
                     <Modal animationType="slide" transparent={false} visible={open}>
                         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                            <Image style={{ width: '100%', height: '100%', borderRadius: 20 }} source={{ uri: "data:image/png;base64," + capturedPhoto }}/>
+                            <Image style={{ width: '100%', height: '100%', borderRadius: 20 }} source={{ uri: "data:image/png;base64," + capturedPhoto }} />
                             <TouchableOpacity style={{ position: 'absolute', left: 70, top: 750 }} onPress={() => handlePutPhotoOnRegister()}>
                                 <FontAwesome name="check" size={50} color="green"></FontAwesome>
                             </TouchableOpacity>
