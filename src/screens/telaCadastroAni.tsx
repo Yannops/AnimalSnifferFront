@@ -5,14 +5,18 @@ import { useNavigation } from '@react-navigation/native';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import { RadioButton } from 'react-native-paper';
-const Cachorro = require('../raças/Cachorro.json');
+const Cachorro = require('../raças/Cachorros.json');
+const Gato = require('../raças/Gatos.json');
 
 const TelaCadastroAni = () => {
     const navigation = useNavigation();
     const [ratioValue, setRatioValue] = useState('Masculino');
+    const [animalopcao, setAnimalOpcao] = useState(0);
+    const [raçaAnimal, setRaçaAnimal] = useState(0);
     const [fotoAnimal, setFotoAnimal] = useState("");
     const [haspermission, setHaspermission] = useState(null);
     const cachorro = Cachorro;
+    const gato = Gato;
 
     useEffect(() => {
         (async () => {
@@ -73,19 +77,26 @@ const TelaCadastroAni = () => {
                 <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? 'padding' : undefined}>
                     <View style={styles.viewContainer}>
                         <Text style={styles.textInput}>Tipo de Animal</Text>
-                        <Picker style={styles.Picker}>
+                        <Picker style={styles.Picker} selectedValue={animalopcao} onValueChange={animalopcao => setAnimalOpcao(animalopcao)}>
                             <Picker.Item value="0" label="Cão" />
                             <Picker.Item value="1" label="Gato" />
                         </Picker>
                     </View>
                     <View style={styles.viewContainer}>
                         <Text style={styles.textInput}>Raça</Text>
-                        <Picker style={styles.Picker}>
-                            {cachorro.map(cachorro => {
+                        <Picker style={styles.Picker} selectedValue={raçaAnimal} onValueChange={raçaAnimal => setRaçaAnimal(raçaAnimal)}>
+                            {animalopcao == 0 ? 
+                            cachorro.map(cachorro => {
                                 return (
                                     <Picker.Item key={cachorro.id} value={cachorro.id} label={cachorro.name} />
                                 );
-                            })}
+                            }) : 
+                            gato.map(gato => {
+                                return (
+                                    <Picker.Item key={gato.id} value={gato.id} label={gato.name} />
+                                );
+                            })
+                        }
                         </Picker>
                     </View>
                     <View style={styles.viewContainer}>
