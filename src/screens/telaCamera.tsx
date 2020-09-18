@@ -83,7 +83,7 @@ const TelaCamera = () => {
                             </TouchableOpacity>
                         </View>
                     </Modal>
-                    : <Text>Nenhuma foto foi Tirada</Text>
+                    : null
                 }
             </Camera>
         </>
