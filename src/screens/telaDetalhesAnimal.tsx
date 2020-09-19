@@ -31,7 +31,7 @@ const TelaDetalhesAnimal = () => {
                 </View>
                 <View style={styles.viewContainer}>
                     <Text style={styles.textInput}>Descrição do Animal</Text>
-                    <Text style={styles.textDetail}>Animal encontrado perto da praça, grande porte, no entando inofensivo!</Text>
+                    <Text style={{...styles.textDetail, height: 100}}>Animal encontrado perto da praça, grande porte, no entando inofensivo!</Text>
                 </View>
                 <View style={styles.viewContainer}>
                     <Text style={styles.textInput}>Imagem do Animal</Text>
@@ -45,7 +45,7 @@ const TelaDetalhesAnimal = () => {
 
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: 'green',
+        backgroundColor: '#27B07D',
         height: 100,
         justifyContent: 'center',
         borderBottomWidth: 1,
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         height: 1350,
-        backgroundColor: 'rgba(0, 0, 0, .2)'
+        backgroundColor: 'rgba(0, 0, 0, .1)'
     },
 
     imagemContainer: {
@@ -94,8 +94,7 @@ const styles = StyleSheet.create({
         width: '80%',
         height: 100,
         fontSize: 20,
-        backgroundColor: '#fff',
-        borderRadius: 8,
+        backgroundColor: '#fff',        
         marginBottom: 30,
         marginTop: 10,
         paddingLeft: 5,

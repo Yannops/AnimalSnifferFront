@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, TouchableOpacity, View, KeyboardAvoidingView, Platform } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, View, KeyboardAvoidingView, Platform, Image } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
 const TelaCadastroUsu = () => {
@@ -9,21 +9,34 @@ const TelaCadastroUsu = () => {
         <Text style={styles.headerText}>Cadastro de Usuário</Text>
       </View>
       <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <Image source={require('../../assets/adicionar.png')} />
         <View style={styles.viewContainer}>
           <Text style={styles.textInput}>CPF</Text>
-          <TextInput keyboardType="numbers-and-punctuation" placeholder="Informe seu CPF..." style={styles.inputs} />
+          <View style={styles.inputView}>
+            <Image source={require('../../assets/cpf.png')} style={styles.ImageStyle} />
+            <TextInput keyboardType="email-address" placeholder="Informe seu CPF..." style={{ flex: 1 }} />
+          </View>
         </View>
         <View style={styles.viewContainer}>
           <Text style={styles.textInput}>Nome</Text>
-          <TextInput keyboardType="default" placeholder="Informe seu Nome..." style={styles.inputs} />
+          <View style={styles.inputView}>
+            <Image source={require('../../assets/carteira-de-identidade.png')} style={styles.ImageStyle} />
+            <TextInput keyboardType="default" placeholder="Informe seu Nome..." style={{ flex: 1 }} />
+          </View>
         </View>
         <View style={styles.viewContainer}>
           <Text style={styles.textInput}>E-mail</Text>
-          <TextInput keyboardType="email-address" placeholder="Informe seu E-mail..." style={styles.inputs} />
+          <View style={styles.inputView}>
+            <Image source={require('../../assets/email.png')} style={styles.ImageStyle} />
+            <TextInput keyboardType="email-address" placeholder="Informe seu E-mail..." style={{ flex: 1 }} />
+          </View>
         </View>
         <View style={styles.viewContainer}>
           <Text style={styles.textInput}>Senha</Text>
-          <TextInput secureTextEntry={true} placeholder="Informe sua Senha..." style={styles.inputs} />
+          <View style={styles.inputView}>
+            <Image source={require('../../assets/lock.png')} style={styles.ImageStyle} />
+            <TextInput underlineColorAndroid="transparent" secureTextEntry={true} placeholder="Informe sua Senha..." style={{ flex: 1 }} />
+          </View>
         </View>
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>CADASTRAR</Text>
@@ -35,7 +48,7 @@ const TelaCadastroUsu = () => {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: 'green',
+    backgroundColor: '#27B07D',
     height: 100,
     justifyContent: 'center',
     borderBottomWidth: 1,
@@ -57,7 +70,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, .2)'
+    backgroundColor: 'rgba(0, 0, 0, .1)'
   },
 
   viewContainer: {
@@ -71,15 +84,27 @@ const styles = StyleSheet.create({
     fontFamily: 'Cinzel_700Bold'
   },
 
-  inputs: {
-    width: '80%',
-    height: 50,
-    fontSize: 20,
+  ImageStyle: {
+    padding: 10,
+    margin: 5,
+    height: 25,
+    width: 25,
+    resizeMode: 'stretch',
+    alignItems: 'center'
+  },
+
+  inputView: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#fff',
-    borderRadius: 8,
-    marginBottom: 30,
-    marginTop: 5,
-    paddingLeft: 5
+    borderWidth: .5,
+    borderColor: '#000',
+    height: 40,
+    borderRadius: 5,
+    marginRight: '20%',
+    marginTop: '2%',
+    marginBottom: '4%',
   },
 
   button: {

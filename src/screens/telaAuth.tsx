@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, KeyboardAvoidingView, Platform, Image } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
@@ -17,13 +17,20 @@ const TelaAuth = () => {
         <Text style={styles.headerText}>Acessar o Aplicativo</Text>
       </View>
       <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+          <Image source={require('../../assets/login.png')} style={{marginBottom: '10%'}} />
         <View style={styles.viewContainer}>
           <Text style={styles.textInput}>E-mail</Text>
-          <TextInput keyboardType="email-address" placeholder="Informe seu E-mail..." style={styles.inputs} />
+          <View style={styles.inputView}>
+            <Image source={require('../../assets/email.png')} style={styles.ImageStyle} />
+            <TextInput keyboardType="email-address" placeholder="Informe seu E-mail..." style={{ flex: 1 }} />
+          </View>
         </View>
         <View style={styles.viewContainer}>
           <Text style={styles.textInput}>Senha</Text>
-          <TextInput secureTextEntry={true} placeholder="Informe sua Senha..." style={styles.inputs} />
+          <View style={styles.inputView}>
+            <Image source={require('../../assets/lock.png')} style={styles.ImageStyle} />
+            <TextInput underlineColorAndroid="transparent" secureTextEntry={true} placeholder="Informe sua Senha..." style={{ flex: 1 }} />
+          </View>
         </View>
         <TouchableOpacity style={styles.button} onPress={handleNavigateToMap}>
           <Text style={styles.buttonText}>ACESSAR</Text>
@@ -34,8 +41,17 @@ const TelaAuth = () => {
 }
 
 const styles = StyleSheet.create({
+  ImageStyle: {
+    padding: 10,
+    margin: 5,
+    height: 25,
+    width: 25,
+    resizeMode: 'stretch',
+    alignItems: 'center'
+  },
+
   header: {
-    backgroundColor: 'green',
+    backgroundColor: '#27B07D',
     height: 100,
     justifyContent: 'center',
     borderBottomWidth: 1,
@@ -57,29 +73,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, .2)'
+    backgroundColor: 'rgba(0, 0, 0, .1)'
   },
 
   viewContainer: {
-    width: '100%',
+    width: '80%',
     marginLeft: 80,
     marginTop: 0
+  },
+
+  inputView: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderWidth: .5,
+    borderColor: '#000',
+    height: 40,
+    borderRadius: 5,
+    marginRight: '20%',
+    marginTop: '5%',
+    marginBottom: '10%',
   },
 
   textInput: {
     fontSize: 20,
     fontFamily: 'Cinzel_700Bold'
-  },
-
-  inputs: {
-    width: '80%',
-    height: 50,
-    fontSize: 20,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    marginBottom: 30,
-    marginTop: 5,
-    paddingLeft: 5
   },
 
   button: {

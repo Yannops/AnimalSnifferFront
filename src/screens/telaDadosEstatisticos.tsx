@@ -57,7 +57,7 @@ const TelaDadosEstatisticos = () => {
 
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: 'green',
+        backgroundColor: '#27B07D',
         height: 100,
         justifyContent: 'center',
         borderBottomWidth: 1,
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     },
 
     container: {
-        borderColor: 'rgba(0, 0, 0, .4)',
+        borderColor: 'rgba(0, 0, 0, .3)',
         borderWidth: 1,
         width: '80%',
         alignSelf: 'center',

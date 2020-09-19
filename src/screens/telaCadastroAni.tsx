@@ -140,7 +140,7 @@ const TelaCadastroAni = () => {
 
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: 'green',
+        backgroundColor: '#27B07D',
         height: 100,
         justifyContent: 'center',
         borderBottomWidth: 1,
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         height: 1600,
-        backgroundColor: 'rgba(0, 0, 0, .2)'
+        backgroundColor: 'rgba(0, 0, 0, .1)'
     },
 
     imagemContainer: {

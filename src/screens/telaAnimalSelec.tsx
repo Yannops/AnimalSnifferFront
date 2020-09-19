@@ -30,7 +30,7 @@ const TelaAnimalSelec = () => {
             </View>
             <View style={styles.container}>
                 <TouchableOpacity onPress={handleNavigateBack}></TouchableOpacity>
-                <TouchableOpacity style={{ ...styles.button, backgroundColor: "#9fff80" }} onPress={handleNavigateToDetail}>
+                <TouchableOpacity style={{ ...styles.button, backgroundColor: "#27B07D" }} onPress={handleNavigateToDetail}>
                     <Text style={styles.buttonText}>Visualizar Detalhes</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ ...styles.button, backgroundColor: "#99b3ff" }} >
@@ -46,7 +46,7 @@ const TelaAnimalSelec = () => {
 
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: 'green',
+        backgroundColor: '#27B07D',
         height: 100,
         justifyContent: 'center',
         borderBottomWidth: 1,
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
 
     InfoAvalContainer: {
         flexDirection: 'row',
-        backgroundColor: 'rgba(0, 0, 0, .2)',
+        backgroundColor: 'rgba(0, 0, 0, .1)',
         paddingTop: 50,
         alignItems: 'center',
         justifyContent: 'center'
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         height: '100%',
-        backgroundColor: 'rgba(0, 0, 0, .2)',
+        backgroundColor: 'rgba(0, 0, 0, .1)',
         paddingBottom: 200
     },
 
