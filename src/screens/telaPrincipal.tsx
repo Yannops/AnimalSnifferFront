@@ -83,11 +83,6 @@ const styles = StyleSheet.create({
         height: '100%',
     },
 
-    arrowGoBack: {
-        marginTop: 80,
-        marginLeft: 20,
-    },
-
     goBackText: {
         fontFamily: 'Cinzel_700Bold',
         fontSize: 20,
@@ -98,22 +93,22 @@ const styles = StyleSheet.create({
     backButton: {
         position: 'absolute',
         zIndex: 1,
-        top: 90,
-        left: 20,
+        top: '12%',
+        left: '8%',
     },
 
     addAnimalButton: {
         position: 'absolute',
         zIndex: 1,
-        top: 740,
-        left: 340
+        top: '80%',
+        left: '80%'
     },
 
     seeStatisticData: {
         position: 'absolute',
         zIndex: 1,
-        top: 90,
-        left: 340
+        top: '12%',
+        left: '80%'
     },
 });
 
