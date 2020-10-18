@@ -16,7 +16,7 @@ const TelaAuth = () => {
       <View style={styles.header}>
         <Text style={styles.headerText}>Acessar o Aplicativo</Text>
       </View>
-      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}>
           <Image source={require('../../assets/login.png')} style={{marginBottom: '10%'}} />
         <View style={styles.viewContainer}>
           <Text style={styles.textInput}>E-mail</Text>

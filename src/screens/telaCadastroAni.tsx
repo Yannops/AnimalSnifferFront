@@ -102,7 +102,7 @@ const TelaCadastroAni = () => {
                     <View style={styles.viewContainer}>
                         <View style={styles.ratioView}>
                             <Text style={{ ...styles.textInput, marginBottom: 15 }}>Sexo</Text>
-                            <Text style={{ ...styles.ratioGroupAnswer, marginLeft: 150 }}>Selecionado: {ratioValue}</Text>
+                            <Text style={{ ...styles.ratioGroupAnswer, marginLeft: '30%' }}>Selecionado: {ratioValue}</Text>
                         </View>
                         <View style={styles.ratioGroup}>
                             <RadioButton.Group value={ratioValue} onValueChange={value => setRatioValue(value)}>
@@ -117,7 +117,7 @@ const TelaCadastroAni = () => {
                     </View>
                     <View style={styles.viewContainer}>
                         <Text style={styles.textInput}>Descrição do Animal</Text>
-                        <TextInput placeholder="Descreva Características do Animal..." style={styles.inputTextArea} />
+                        <TextInput placeholder="Características do Animal..." style={styles.inputTextArea} />
                     </View>
                     {fotoAnimal !== "" ?
                         <Image style={styles.imagemContainer} source={{ uri: "data:image/png;base64," + fotoAnimal }} />
@@ -232,14 +232,14 @@ const styles = StyleSheet.create({
     },
 
     ratioGroupText: {
-        fontSize: 15,
-        fontWeight: '400',
+        fontSize: 10,
         fontFamily: 'Cinzel_700Bold',
         marginTop: 12
     },
 
     ratioView: {
         flexDirection: 'row',
+
     },
 
     ratioGroupAnswer: {

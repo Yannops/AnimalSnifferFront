@@ -45,14 +45,13 @@ const styles = StyleSheet.create({
   },
 
   titleContainer: {
-    marginBottom: 350,
+    marginBottom: '50%',
   },
 
   title: {
-    fontSize: 50,
+    fontSize: 40,
     color: 'green',
     textAlign: 'center',
-    fontWeight: '500',
     fontFamily: 'Cinzel_700Bold',
   },
 
@@ -69,7 +68,6 @@ const styles = StyleSheet.create({
 
   buttonText: {
     textAlign: 'center',
-    fontWeight: '600',
     fontFamily: 'Cinzel_700Bold',
   },
 });

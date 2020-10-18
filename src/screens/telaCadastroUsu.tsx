@@ -8,7 +8,7 @@ const TelaCadastroUsu = () => {
       <View style={styles.header}>
         <Text style={styles.headerText}>Cadastro de Usuário</Text>
       </View>
-      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}>
         <Image source={require('../../assets/adicionar.png')} />
         <View style={styles.viewContainer}>
           <Text style={styles.textInput}>CPF</Text>
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    height: '100%',
+    height: '98%',
     backgroundColor: 'rgba(0, 0, 0, .1)'
   },
 

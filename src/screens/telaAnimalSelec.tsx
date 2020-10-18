@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
 
     texts: {
         fontFamily: 'Cinzel_700Bold',
-        fontSize: 20,
+        fontSize: 16,
     },
 
     container: {
