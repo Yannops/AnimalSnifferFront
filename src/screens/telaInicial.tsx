@@ -37,7 +37,6 @@ const TelaInicial = () => {
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: "#233245",
     flex: 1,
     width: "100%",
     justifyContent: "space-evenly",
