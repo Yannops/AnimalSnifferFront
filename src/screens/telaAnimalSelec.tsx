@@ -21,9 +21,6 @@ const TelaAnimalSelec = () => {
     return (
         <>
             <StatusBar barStyle="dark-content" />
-            <View style={styles.header}>
-                <Text style={styles.headerText}>Animal 1</Text>
-            </View>
             <View style={styles.InfoAvalContainer}>
                 <Text style={styles.texts}>Total de Avaliações: </Text>
                 <Text style={styles.texts}>{avaliar} pessoas avaliaram</Text>
@@ -45,23 +42,6 @@ const TelaAnimalSelec = () => {
 }
 
 const styles = StyleSheet.create({
-    header: {
-        backgroundColor: '#27B07D',
-        height: 100,
-        justifyContent: 'center',
-        borderBottomWidth: 1,
-        borderBottomColor: 'blue',
-    },
-
-    headerText: {
-        fontSize: 20,
-        fontFamily: 'Cinzel_700Bold',
-        color: 'rgba(0, 0, 0, .6)',
-        paddingTop: 30,
-        textAlign: 'center',
-        letterSpacing: 3
-    },
-
     InfoAvalContainer: {
         flexDirection: 'row',
         backgroundColor: 'rgba(0, 0, 0, .1)',

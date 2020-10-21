@@ -5,9 +5,6 @@ import { TextInput } from 'react-native-gesture-handler';
 const TelaCadastroUsu = () => {
   return (
     <>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Cadastro de Usuário</Text>
-      </View>
       <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}>
         <Image source={require('../../assets/adicionar.png')} />
         <View style={styles.viewContainer}>
@@ -47,23 +44,6 @@ const TelaCadastroUsu = () => {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: '#27B07D',
-    height: 100,
-    justifyContent: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: 'blue', 
-  },
-
-  headerText: {
-    fontSize: 20,
-    fontFamily: 'Cinzel_700Bold',
-    color: 'rgba(0, 0, 0, .6)',
-    paddingTop: 30,
-    textAlign: 'center',
-    letterSpacing: 3
-  },
-
   container: {
     flexDirection: 'column',
     justifyContent: 'center',

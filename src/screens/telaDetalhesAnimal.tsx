@@ -13,9 +13,6 @@ const TelaDetalhesAnimal = () => {
 
     return (
         <>
-            <View style={styles.header}>
-                <Text style={styles.headerText}>Detalhes do Animal</Text>
-            </View>
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.viewContainer}>
                     <Text style={styles.textInput}>Tipo de Animal</Text>
@@ -44,23 +41,6 @@ const TelaDetalhesAnimal = () => {
 }
 
 const styles = StyleSheet.create({
-    header: {
-        backgroundColor: '#27B07D',
-        height: 100,
-        justifyContent: 'center',
-        borderBottomWidth: 1,
-        borderBottomColor: 'blue',
-    },
-
-    headerText: {
-        fontSize: 20,
-        fontFamily: 'Cinzel_700Bold',
-        color: 'rgba(0, 0, 0, .6)',
-        paddingTop: 30,
-        textAlign: 'center',
-        letterSpacing: 3
-    },
-
     container: {
         flexDirection: 'column',
         justifyContent: 'flex-start',

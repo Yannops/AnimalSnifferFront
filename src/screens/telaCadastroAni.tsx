@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, StyleSheet, TouchableOpacity, View, KeyboardAvoidingView, Platform, Picker, AsyncStorage, Image } from 'react-native';
 import { TextInput, ScrollView } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import { RadioButton } from 'react-native-paper';
@@ -25,14 +25,14 @@ const TelaCadastroAni = () => {
         })();
     }, []);
 
-    useEffect(() => {
+    useFocusEffect(() => {
         (async () => {
             const foto = await AsyncStorage.getItem('fotoAnimal');
             if (foto) {
                 setFotoAnimal(foto);
             }
         })();
-    }, [fotoAnimal]);
+    });
 
     if (haspermission === null) {
         return <View />
@@ -70,9 +70,6 @@ const TelaCadastroAni = () => {
 
     return (
         <>
-            <View style={styles.header}>
-                <Text style={styles.headerText}>Cadastro de Animal</Text>
-            </View>
             <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
                 <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? 'padding' : undefined}>
                     <View style={styles.viewContainer}>
@@ -139,23 +136,6 @@ const TelaCadastroAni = () => {
 }
 
 const styles = StyleSheet.create({
-    header: {
-        backgroundColor: '#27B07D',
-        height: 100,
-        justifyContent: 'center',
-        borderBottomWidth: 1,
-        borderBottomColor: 'blue',
-    },
-
-    headerText: {
-        fontSize: 20,
-        fontFamily: 'Cinzel_700Bold',
-        color: 'rgba(0, 0, 0, .6)',
-        paddingTop: 30,
-        textAlign: 'center',
-        letterSpacing: 3
-    },
-
     container: {
         flexDirection: 'column',
         justifyContent: 'flex-start',

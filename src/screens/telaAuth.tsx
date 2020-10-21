@@ -13,9 +13,6 @@ const TelaAuth = () => {
 
   return (
     <>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Acessar o Aplicativo</Text>
-      </View>
       <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}>
           <Image source={require('../../assets/login.png')} style={{marginBottom: '10%'}} />
         <View style={styles.viewContainer}>
@@ -48,23 +45,6 @@ const styles = StyleSheet.create({
     width: 25,
     resizeMode: 'stretch',
     alignItems: 'center'
-  },
-
-  header: {
-    backgroundColor: '#27B07D',
-    height: 100,
-    justifyContent: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: 'blue',
-  },
-
-  headerText: {
-    fontSize: 20,
-    color: 'rgba(0, 0, 0, .6)',
-    paddingTop: 30,
-    textAlign: 'center',
-    letterSpacing: 3,
-    fontFamily: 'Cinzel_700Bold'
   },
 
   container: {
