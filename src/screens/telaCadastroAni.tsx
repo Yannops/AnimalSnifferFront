@@ -1,12 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, SetStateAction } from 'react';
 import { Text, StyleSheet, TouchableOpacity, View, KeyboardAvoidingView, Platform, Picker, AsyncStorage, Image } from 'react-native';
 import { TextInput, ScrollView } from 'react-native-gesture-handler';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import { RadioButton } from 'react-native-paper';
+import { Feather } from '@expo/vector-icons';
 const Cachorro = require('../raças/Cachorros.json');
 const Gato = require('../raças/Gatos.json');
+
+interface CachorroProps {
+    id: number;
+    name: string;
+}
+
+interface GatoProps {
+    id: number;
+    name: string;
+}
 
 const TelaCadastroAni = () => {
     const navigation = useNavigation();
@@ -14,7 +25,7 @@ const TelaCadastroAni = () => {
     const [animalopcao, setAnimalOpcao] = useState(0);
     const [raçaAnimal, setRaçaAnimal] = useState(0);
     const [fotoAnimal, setFotoAnimal] = useState("");
-    const [haspermission, setHaspermission] = useState(null);
+    const [haspermission, setHaspermission] = useState<SetStateAction<boolean>>();
     const cachorro = Cachorro;
     const gato = Gato;
 
@@ -25,6 +36,7 @@ const TelaCadastroAni = () => {
         })();
     }, []);
 
+    console.log(fotoAnimal);
     useFocusEffect(() => {
         (async () => {
             const foto = await AsyncStorage.getItem('fotoAnimal');
@@ -49,6 +61,12 @@ const TelaCadastroAni = () => {
 
     function handleOpenCamera() {
         navigation.navigate('TelaCamera');
+    }
+
+    function handleClearImage() {
+        AsyncStorage.clear();
+        setFotoAnimal('');
+        console.log(fotoAnimal);
     }
 
     async function pickImage() {
@@ -82,18 +100,18 @@ const TelaCadastroAni = () => {
                     <View style={styles.viewContainer}>
                         <Text style={styles.textInput}>Raça</Text>
                         <Picker style={styles.Picker} selectedValue={raçaAnimal} onValueChange={raçaAnimal => setRaçaAnimal(raçaAnimal)}>
-                            {animalopcao == 0 ? 
-                            cachorro.map(cachorro => {
-                                return (
-                                    <Picker.Item key={cachorro.id} value={cachorro.id} label={cachorro.name} />
-                                );
-                            }) : 
-                            gato.map(gato => {
-                                return (
-                                    <Picker.Item key={gato.id} value={gato.id} label={gato.name} />
-                                );
-                            })
-                        }
+                            {animalopcao == 0 ?
+                                cachorro.map((cachorro: CachorroProps) => {
+                                    return (
+                                        <Picker.Item key={cachorro.id} value={cachorro.id} label={cachorro.name} />
+                                    );
+                                }) :
+                                gato.map((gato: GatoProps) => {
+                                    return (
+                                        <Picker.Item key={gato.id} value={gato.id} label={gato.name} />
+                                    );
+                                })
+                            }
                         </Picker>
                     </View>
                     <View style={styles.viewContainer}>
@@ -117,7 +135,12 @@ const TelaCadastroAni = () => {
                         <TextInput placeholder="Características do Animal..." style={styles.inputTextArea} />
                     </View>
                     {fotoAnimal !== "" ?
-                        <Image style={styles.imagemContainer} source={{ uri: "data:image/png;base64," + fotoAnimal }} />
+                        <>
+                            <TouchableOpacity style={styles.buttonDeleteImage} onPress={handleClearImage}>
+                                <Feather name="x" size={40} color="red" />
+                            </TouchableOpacity>
+                            <Image style={styles.imagemContainer} source={{ uri: "data:image/png;base64," + fotoAnimal }} />
+                        </>
                         : null
                     }
                     <TouchableOpacity onPress={() => pickImage()} style={{ ...styles.button, backgroundColor: '#7D7B7A', }}>
@@ -225,6 +248,20 @@ const styles = StyleSheet.create({
     ratioGroupAnswer: {
         fontSize: 14,
         paddingTop: 25
+    },
+
+    buttonDeleteImage: {
+        zIndex: 10,
+        position: "absolute",
+        top: '55%',
+        right: '12%',
+        width: 44,
+        height: 44,
+        backgroundColor: '#fff',
+        borderRadius: 20,
+        borderColor: '#D3E1E5',
+        borderStyle: 'solid',
+        borderWidth: 2
     }
 });
 
