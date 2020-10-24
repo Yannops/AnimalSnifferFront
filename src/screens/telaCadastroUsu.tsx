@@ -1,10 +1,12 @@
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity, View, KeyboardAvoidingView, Platform, Image } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import Header from '../components/Header';
 
 const TelaCadastroUsu = () => {
   return (
     <>
+      <Header title="Cadastro de Usuário" />
       <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}>
         <Image source={require('../../assets/adicionar.png')} />
         <View style={styles.viewContainer}>

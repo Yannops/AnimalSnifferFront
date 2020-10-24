@@ -6,6 +6,7 @@ import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import { RadioButton } from 'react-native-paper';
 import { Feather } from '@expo/vector-icons';
+import Header from '../components/Header';
 const Cachorro = require('../raças/Cachorros.json');
 const Gato = require('../raças/Gatos.json');
 
@@ -36,7 +37,6 @@ const TelaCadastroAni = () => {
         })();
     }, []);
 
-    console.log(fotoAnimal);
     useFocusEffect(() => {
         (async () => {
             const foto = await AsyncStorage.getItem('fotoAnimal');
@@ -66,7 +66,6 @@ const TelaCadastroAni = () => {
     function handleClearImage() {
         AsyncStorage.clear();
         setFotoAnimal('');
-        console.log(fotoAnimal);
     }
 
     async function pickImage() {
@@ -78,6 +77,11 @@ const TelaCadastroAni = () => {
                 base64: true,
                 quality: 1,
             });
+
+            if (result.cancelled) {
+                return;
+            }
+
             AsyncStorage.removeItem("fotoAnimal");
             setFotoAnimal(result.base64);
         } catch (e) {
@@ -88,6 +92,7 @@ const TelaCadastroAni = () => {
 
     return (
         <>
+            <Header title="Cadastro do Animal" />
             <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
                 <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? 'padding' : undefined}>
                     <View style={styles.viewContainer}>
@@ -117,14 +122,14 @@ const TelaCadastroAni = () => {
                     <View style={styles.viewContainer}>
                         <View style={styles.ratioView}>
                             <Text style={{ ...styles.textInput, marginBottom: 15 }}>Sexo</Text>
-                            <Text style={{ ...styles.ratioGroupAnswer, marginLeft: '30%' }}>Selecionado: {ratioValue}</Text>
+                            <Text style={{ ...styles.ratioGroupAnswer, marginLeft: '40%' }}>Selecionado: {ratioValue}</Text>
                         </View>
                         <View style={styles.ratioGroup}>
                             <RadioButton.Group value={ratioValue} onValueChange={value => setRatioValue(value)}>
-                                <Text style={styles.ratioGroupText}>Masculino</Text>
-                                <RadioButton value="Masculino" />
-                                <Text style={styles.ratioGroupText}>Feminino</Text>
-                                <RadioButton value="Feminino" />
+                                <Text style={styles.ratioGroupText}>Macho</Text>
+                                <RadioButton value="Macho" />
+                                <Text style={styles.ratioGroupText}>Fêmea</Text>
+                                <RadioButton value="Fêmea" />
                                 <Text style={styles.ratioGroupText}>Indefinido</Text>
                                 <RadioButton value="Indefinido" />
                             </RadioButton.Group>
@@ -150,7 +155,7 @@ const TelaCadastroAni = () => {
                         <Text style={styles.buttonText}>Abrir Câmera</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={handleNavigateBack}>
-                        <Text style={styles.buttonText}>CADASTRAR</Text>
+                        <Text style={styles.buttonText}>Cadastrar</Text>
                     </TouchableOpacity>
                 </KeyboardAvoidingView>
             </ScrollView>
@@ -235,7 +240,7 @@ const styles = StyleSheet.create({
     },
 
     ratioGroupText: {
-        fontSize: 10,
+        fontSize: 12,
         fontFamily: 'Cinzel_700Bold',
         marginTop: 12
     },
@@ -251,10 +256,10 @@ const styles = StyleSheet.create({
     },
 
     buttonDeleteImage: {
-        zIndex: 10,
-        position: "absolute",
-        top: '55%',
-        right: '12%',
+        zIndex: 1,
+        position: "relative",
+        top: '8%',
+        left: '32%',
         width: 44,
         height: 44,
         backgroundColor: '#fff',

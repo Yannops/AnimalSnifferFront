@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Alert, StatusBar, Image, TouchableOpacity } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import * as Location from 'expo-location';
 
@@ -56,6 +56,7 @@ const TelaPrincipal = () => {
             </TouchableOpacity>
             {initialPosition[0] !== 0 && (
                 <MapView
+                    provider={PROVIDER_GOOGLE}
                     style={styles.map}
                     initialRegion={{
                         latitude: initialPosition[0],

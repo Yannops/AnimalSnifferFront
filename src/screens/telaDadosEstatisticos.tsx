@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
+import Header from '../components/Header';
 
 const TelaDadosEstatisticos = () => {
     const navigation = useNavigation();
@@ -12,6 +13,7 @@ const TelaDadosEstatisticos = () => {
 
     return (
         <>
+            <Header title="Dados Estatísticos" />
             <StatusBar barStyle="dark-content" />
             <TouchableOpacity onPress={handleNavigateBack}></TouchableOpacity>
             <ScrollView>
@@ -25,20 +27,6 @@ const TelaDadosEstatisticos = () => {
                     <Text style={styles.infoText}>Machos: 5</Text>
                     <Text style={styles.infoText}>Fêmeas: 5</Text>
                     <Text style={styles.infoText}>Indefinidos: 1</Text>
-                </View>
-                <View style={styles.container}>
-                    <Text style={styles.infoTitle}>Total de Gatos: 12</Text>
-                    <Text style={styles.infoText}>Fêmeas: 5</Text>
-                    <Text style={styles.infoText}>Machos: 1</Text>
-                    <Text style={styles.infoText}>Persas: 4</Text>
-                    <Text style={styles.infoText}>Siameses: 16</Text>
-                </View>
-                <View style={styles.container}>
-                    <Text style={styles.infoTitle}>Total de Gatos: 12</Text>
-                    <Text style={styles.infoText}>Fêmeas: 5</Text>
-                    <Text style={styles.infoText}>Machos: 1</Text>
-                    <Text style={styles.infoText}>Persas: 4</Text>
-                    <Text style={styles.infoText}>Siameses: 16</Text>
                 </View>
                 <View style={styles.container}>
                     <Text style={styles.infoTitle}>Total de Gatos: 12</Text>
