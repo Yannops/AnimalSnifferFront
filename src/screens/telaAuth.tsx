@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, TouchableOpacity, View, StyleSheet, KeyboardAvoidingView, Platform, Image } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
+import api from '../services/api';
 
 const TelaAuth = () => {
   const navigation = useNavigation();
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
 
 
-  async function handleNavigateToMap() {
-    navigation.navigate('TelaPrincipal');
+  function handleNavigateToMap() {
+    const idResult = api.get('usuario/Login', {
+      email,
+      senha
+    }).then(() => {
+      localStorage.setItem("idUser", JSON.stringify(idResult));
+      navigation.navigate('TelaPrincipal');
+    });
   }
 
   return (
@@ -21,14 +30,14 @@ const TelaAuth = () => {
           <Text style={styles.textInput}>E-mail</Text>
           <View style={styles.inputView}>
             <Image source={require('../../assets/email.png')} style={styles.ImageStyle} />
-            <TextInput keyboardType="email-address" placeholder="Informe seu E-mail..." style={{ flex: 1 }} />
+            <TextInput value={email} onChangeText={setEmail} keyboardType="email-address" placeholder="Informe seu E-mail..." style={{ flex: 1 }} />
           </View>
         </View>
         <View style={styles.viewContainer}>
           <Text style={styles.textInput}>Senha</Text>
           <View style={styles.inputView}>
             <Image source={require('../../assets/lock.png')} style={styles.ImageStyle} />
-            <TextInput underlineColorAndroid="transparent" secureTextEntry={true} placeholder="Informe sua Senha..." style={{ flex: 1 }} />
+            <TextInput value={senha} onChangeText={setSenha} underlineColorAndroid="transparent" secureTextEntry={true} placeholder="Informe sua Senha..." style={{ flex: 1 }} />
           </View>
         </View>
         <TouchableOpacity style={styles.button} onPress={handleNavigateToMap}>

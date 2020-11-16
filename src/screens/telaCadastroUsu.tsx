@@ -1,43 +1,55 @@
-import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
 import { Text, StyleSheet, TouchableOpacity, View, KeyboardAvoidingView, Platform, Image } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import Header from '../components/Header';
+import api from '../services/api';
 
 const TelaCadastroUsu = () => {
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const navigation = useNavigation();
+
+    function handleRegisterNewUser() {
+      api.post('usuario', {
+        nome,
+        senha,
+        email
+      }).then(() => {
+        alert(`Parabéns ${nome}, agora você é um de nossos usuários`);
+        navigation.goBack();
+      }); 
+  }
+
+
   return (
     <>
       <Header title="Cadastro de Usuário" />
       <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}>
         <Image source={require('../../assets/adicionar.png')} />
         <View style={styles.viewContainer}>
-          <Text style={styles.textInput}>CPF</Text>
-          <View style={styles.inputView}>
-            <Image source={require('../../assets/cpf.png')} style={styles.ImageStyle} />
-            <TextInput keyboardType="email-address" placeholder="Informe seu CPF..." style={{ flex: 1 }} />
-          </View>
-        </View>
-        <View style={styles.viewContainer}>
           <Text style={styles.textInput}>Nome</Text>
           <View style={styles.inputView}>
             <Image source={require('../../assets/carteira-de-identidade.png')} style={styles.ImageStyle} />
-            <TextInput keyboardType="default" placeholder="Informe seu Nome..." style={{ flex: 1 }} />
+            <TextInput value={nome} onChangeText={setNome} keyboardType="default" placeholder="Informe seu Nome..." style={{ flex: 1 }} />
           </View>
         </View>
         <View style={styles.viewContainer}>
           <Text style={styles.textInput}>E-mail</Text>
           <View style={styles.inputView}>
             <Image source={require('../../assets/email.png')} style={styles.ImageStyle} />
-            <TextInput keyboardType="email-address" placeholder="Informe seu E-mail..." style={{ flex: 1 }} />
+            <TextInput value={email} onChangeText={setEmail} keyboardType="email-address" placeholder="Informe seu E-mail..." style={{ flex: 1 }} />
           </View>
         </View>
         <View style={styles.viewContainer}>
           <Text style={styles.textInput}>Senha</Text>
           <View style={styles.inputView}>
             <Image source={require('../../assets/lock.png')} style={styles.ImageStyle} />
-            <TextInput underlineColorAndroid="transparent" secureTextEntry={true} placeholder="Informe sua Senha..." style={{ flex: 1 }} />
+            <TextInput value={senha} onChangeText={setSenha} underlineColorAndroid="transparent" secureTextEntry={true} placeholder="Informe sua Senha..." style={{ flex: 1 }} />
           </View>
         </View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleRegisterNewUser}>
           <Text style={styles.buttonText}>CADASTRAR</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
