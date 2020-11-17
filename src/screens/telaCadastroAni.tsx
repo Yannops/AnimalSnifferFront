@@ -2,11 +2,16 @@ import React, { useState, useEffect, SetStateAction } from 'react';
 import { Text, StyleSheet, TouchableOpacity, View, KeyboardAvoidingView, Platform, Picker, AsyncStorage, Image } from 'react-native';
 import { TextInput, ScrollView } from 'react-native-gesture-handler';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { MapEvent } from 'react-native-maps';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import { RadioButton } from 'react-native-paper';
 import { Feather } from '@expo/vector-icons';
 import Header from '../components/Header';
+import * as Location from 'expo-location';
+import { Alert } from 'react-native';
+import api from '../services/api';
+
 const Cachorro = require('../raças/Cachorros.json');
 const Gato = require('../raças/Gatos.json');
 
@@ -22,10 +27,13 @@ interface GatoProps {
 
 const TelaCadastroAni = () => {
     const navigation = useNavigation();
-    const [ratioValue, setRatioValue] = useState('Masculino');
-    const [animalopcao, setAnimalOpcao] = useState(0);
-    const [raçaAnimal, setRaçaAnimal] = useState(0);
-    const [fotoAnimal, setFotoAnimal] = useState("");
+    const [sexo, setSexo] = useState('Macho');
+    const [tipo, setTipo] = useState('Cão');
+    const [raca, setRaca] = useState('Labrador');
+    const [imagem, setImagem] = useState('');
+    const [descricao, setDescricao] = useState('');
+    const [ativo, setAtivo] = useState(true);
+    const [position, setPosition] = useState<[number, number]>([0, 0]);
     const [haspermission, setHaspermission] = useState<SetStateAction<boolean>>();
     const cachorro = Cachorro;
     const gato = Gato;
@@ -41,10 +49,27 @@ const TelaCadastroAni = () => {
         (async () => {
             const foto = await AsyncStorage.getItem('fotoAnimal');
             if (foto) {
-                setFotoAnimal(foto);
+                setImagem(foto);
             }
         })();
     });
+
+    useEffect(() => {
+        async function loadPosition() {
+            const { status } = await Location.requestPermissionsAsync();
+
+            if (status !== 'granted') {
+                Alert.alert('Por favor, permita que nós usemos sua localização!');
+                return;
+            }
+
+            const location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
+            const { latitude, longitude } = location.coords;
+
+            setPosition([latitude, longitude]);
+        }
+        loadPosition();
+    }, []);
 
     if (haspermission === null) {
         return <View />
@@ -54,9 +79,30 @@ const TelaCadastroAni = () => {
         return <Text>Acesso Negado!</Text>
     }
 
-    function handleNavigateBack() {
-        AsyncStorage.clear();
-        navigation.goBack();
+    const data = {
+        tipo,
+        raca,
+        sexo,
+        descricao,
+        latitude: position[0],
+        longitude: position[1],
+        imagem,
+        ativo,
+        idUsuario: 1,
+    }
+
+    async function handleCreateNewAnimal() {
+        try {
+            await api.post('animal', data).then(() => {
+                alert('Animal Criado com Sucesso!');
+                AsyncStorage.removeItem('fotoAnimal');
+                navigation.goBack();
+                console.log(position[0], position[1])
+            });
+        } catch (e) {
+            console.log(e);
+        }
+
     }
 
     function handleOpenCamera() {
@@ -65,7 +111,7 @@ const TelaCadastroAni = () => {
 
     function handleClearImage() {
         AsyncStorage.clear();
-        setFotoAnimal('');
+        setImagem('');
     }
 
     async function pickImage() {
@@ -83,7 +129,7 @@ const TelaCadastroAni = () => {
             }
 
             AsyncStorage.removeItem("fotoAnimal");
-            setFotoAnimal(result.base64);
+            setImagem(result.base64);
         } catch (e) {
             console.log(e)
         }
@@ -97,23 +143,23 @@ const TelaCadastroAni = () => {
                 <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? 'padding' : undefined}>
                     <View style={styles.viewContainer}>
                         <Text style={styles.textInput}>Tipo de Animal</Text>
-                        <Picker style={styles.Picker} selectedValue={animalopcao} onValueChange={animalopcao => setAnimalOpcao(animalopcao)}>
-                            <Picker.Item value="0" label="Cão" />
-                            <Picker.Item value="1" label="Gato" />
+                        <Picker style={styles.Picker} selectedValue={tipo} onValueChange={animalopcao => setTipo(animalopcao)}>
+                            <Picker.Item value="Cão" label="Cão" />
+                            <Picker.Item value="Gato" label="Gato" />
                         </Picker>
                     </View>
                     <View style={styles.viewContainer}>
                         <Text style={styles.textInput}>Raça</Text>
-                        <Picker style={styles.Picker} selectedValue={raçaAnimal} onValueChange={raçaAnimal => setRaçaAnimal(raçaAnimal)}>
-                            {animalopcao == 0 ?
+                        <Picker style={styles.Picker} selectedValue={raca} onValueChange={raçaAnimal => setRaca(raçaAnimal)}>
+                            {tipo.match('Cão') ?
                                 cachorro.map((cachorro: CachorroProps) => {
                                     return (
-                                        <Picker.Item key={cachorro.id} value={cachorro.id} label={cachorro.name} />
+                                        <Picker.Item key={cachorro.id} value={cachorro.name} label={cachorro.name} />
                                     );
                                 }) :
                                 gato.map((gato: GatoProps) => {
                                     return (
-                                        <Picker.Item key={gato.id} value={gato.id} label={gato.name} />
+                                        <Picker.Item key={gato.id} value={gato.name} label={gato.name} />
                                     );
                                 })
                             }
@@ -122,10 +168,10 @@ const TelaCadastroAni = () => {
                     <View style={styles.viewContainer}>
                         <View style={styles.ratioView}>
                             <Text style={{ ...styles.textInput, marginBottom: 15 }}>Sexo</Text>
-                            <Text style={{ ...styles.ratioGroupAnswer, marginLeft: '40%' }}>Selecionado: {ratioValue}</Text>
+                            <Text style={{ ...styles.ratioGroupAnswer, marginLeft: '40%' }}>Selecionado: {sexo}</Text>
                         </View>
                         <View style={styles.ratioGroup}>
-                            <RadioButton.Group value={ratioValue} onValueChange={value => setRatioValue(value)}>
+                            <RadioButton.Group value={sexo} onValueChange={value => setSexo(value)}>
                                 <Text style={styles.ratioGroupText}>Macho</Text>
                                 <RadioButton value="Macho" />
                                 <Text style={styles.ratioGroupText}>Fêmea</Text>
@@ -137,14 +183,14 @@ const TelaCadastroAni = () => {
                     </View>
                     <View style={styles.viewContainer}>
                         <Text style={styles.textInput}>Descrição do Animal</Text>
-                        <TextInput placeholder="Características do Animal..." style={styles.inputTextArea} />
+                        <TextInput value={descricao} onChangeText={setDescricao} placeholder="Características do Animal..." style={styles.inputTextArea} />
                     </View>
-                    {fotoAnimal !== "" ?
+                    {imagem !== "" ?
                         <>
                             <TouchableOpacity style={styles.buttonDeleteImage} onPress={handleClearImage}>
                                 <Feather name="x" size={40} color="red" />
                             </TouchableOpacity>
-                            <Image style={styles.imagemContainer} source={{ uri: "data:image/png;base64," + fotoAnimal }} />
+                            <Image style={styles.imagemContainer} source={{ uri: "data:image/png;base64," + imagem }} />
                         </>
                         : null
                     }
@@ -154,7 +200,7 @@ const TelaCadastroAni = () => {
                     <TouchableOpacity onPress={handleOpenCamera} style={{ ...styles.button, backgroundColor: '#7D7B7A', }}>
                         <Text style={styles.buttonText}>Abrir Câmera</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={handleNavigateBack}>
+                    <TouchableOpacity style={styles.button} onPress={handleCreateNewAnimal}>
                         <Text style={styles.buttonText}>Cadastrar</Text>
                     </TouchableOpacity>
                 </KeyboardAvoidingView>

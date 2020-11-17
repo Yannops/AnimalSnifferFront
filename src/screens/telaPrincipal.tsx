@@ -66,12 +66,7 @@ const TelaPrincipal = () => {
                     }}
                     mapType="hybrid"
                 >
-                    <Marker onPress={handleNavigateToAnimalSelec} coordinate={{ latitude: initialPosition[0], longitude: initialPosition[1] }}>
-                        <Image source={require('../../assets/dog.png')} />
-                    </Marker>
-                    <Marker onPress={handleNavigateToAnimalSelec} coordinate={{ latitude: initialPosition[0] + 0.01, longitude: initialPosition[1] }}>
-                        <Image source={require('../../assets/cat.png')} />
-                    </Marker>
+                    
                 </MapView>
             )}
         </>

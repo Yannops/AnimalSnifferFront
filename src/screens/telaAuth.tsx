@@ -12,13 +12,7 @@ const TelaAuth = () => {
 
 
   function handleNavigateToMap() {
-    const idResult = api.get('usuario/Login', {
-      email,
-      senha
-    }).then(() => {
-      localStorage.setItem("idUser", JSON.stringify(idResult));
       navigation.navigate('TelaPrincipal');
-    });
   }
 
   return (
