@@ -28,11 +28,11 @@ interface GatoProps {
 const TelaCadastroAni = () => {
     const navigation = useNavigation();
     const [sexo, setSexo] = useState('Macho');
-    const [tipo, setTipo] = useState('Cão');
+    const [tipo, setTipo] = useState('Cachorro');
     const [raca, setRaca] = useState('Labrador');
     const [imagem, setImagem] = useState('');
     const [descricao, setDescricao] = useState('');
-    const [ativo, setAtivo] = useState(true);
+    const [idUsuario, setIdUsuario] = useState(0);
     const [position, setPosition] = useState<[number, number]>([0, 0]);
     const [haspermission, setHaspermission] = useState<SetStateAction<boolean>>();
     const cachorro = Cachorro;
@@ -48,9 +48,13 @@ const TelaCadastroAni = () => {
     useFocusEffect(() => {
         (async () => {
             const foto = await AsyncStorage.getItem('fotoAnimal');
+        
             if (foto) {
                 setImagem(foto);
             }
+
+            const id = await AsyncStorage.getItem("idUsuario");
+            setIdUsuario(Number(id));
         })();
     });
 
@@ -87,20 +91,19 @@ const TelaCadastroAni = () => {
         latitude: position[0],
         longitude: position[1],
         imagem,
-        ativo,
-        idUsuario: 1,
+        ativo: true,
+        idUsuario
     }
 
     async function handleCreateNewAnimal() {
         try {
-            await api.post('animal', data).then(() => {
-                alert('Animal Criado com Sucesso!');
-                AsyncStorage.removeItem('fotoAnimal');
-                navigation.goBack();
-                console.log(position[0], position[1])
-            });
+            await api.post('animal', data);
+            alert('Animal Adicionado com Sucesso!');
+            AsyncStorage.removeItem('fotoAnimal');
+            setImagem('');
+            navigation.goBack();
         } catch (e) {
-            console.log(e);
+            alert('Por favor, verifique sua conexão e tente novamente!');
         }
 
     }
@@ -110,7 +113,7 @@ const TelaCadastroAni = () => {
     }
 
     function handleClearImage() {
-        AsyncStorage.clear();
+        AsyncStorage.removeItem('fotoAnimal');
         setImagem('');
     }
 
@@ -144,14 +147,14 @@ const TelaCadastroAni = () => {
                     <View style={styles.viewContainer}>
                         <Text style={styles.textInput}>Tipo de Animal</Text>
                         <Picker style={styles.Picker} selectedValue={tipo} onValueChange={animalopcao => setTipo(animalopcao)}>
-                            <Picker.Item value="Cão" label="Cão" />
+                            <Picker.Item value="Cachorro" label="Cachorro" />
                             <Picker.Item value="Gato" label="Gato" />
                         </Picker>
                     </View>
                     <View style={styles.viewContainer}>
                         <Text style={styles.textInput}>Raça</Text>
                         <Picker style={styles.Picker} selectedValue={raca} onValueChange={raçaAnimal => setRaca(raçaAnimal)}>
-                            {tipo.match('Cão') ?
+                            {tipo.match('Cachorro') ?
                                 cachorro.map((cachorro: CachorroProps) => {
                                     return (
                                         <Picker.Item key={cachorro.id} value={cachorro.name} label={cachorro.name} />

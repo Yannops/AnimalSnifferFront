@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, KeyboardAvoidingView, Platform, Image } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, KeyboardAvoidingView, Platform, Image, AsyncStorage } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
@@ -11,15 +11,24 @@ const TelaAuth = () => {
   const [senha, setSenha] = useState('');
 
 
-  function handleNavigateToMap() {
+  async function handleNavigateToMap() {
+    try {
+      const response = await api.post('usuario/Login', { email, senha });  
+      AsyncStorage.setItem("idUsuario", JSON.stringify(response.data.id));    
       navigation.navigate('TelaPrincipal');
+    } catch (error) {
+      setEmail('');
+      setSenha('');
+      alert('Senha ou E-mail invalidos!');
+    }
+    
   }
 
   return (
     <>
       <Header title="Acessar Aplicativo" />
       <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}>
-          <Image source={require('../../assets/login.png')} style={{marginBottom: '10%'}} />
+        <Image source={require('../../assets/login.png')} style={{ marginBottom: '10%' }} />
         <View style={styles.viewContainer}>
           <Text style={styles.textInput}>E-mail</Text>
           <View style={styles.inputView}>

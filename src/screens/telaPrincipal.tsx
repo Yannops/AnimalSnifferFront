@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Alert, StatusBar, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Alert, StatusBar, Image, TouchableOpacity, AsyncStorage } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import * as Location from 'expo-location';
+import api from '../services/api';
+
+interface AnimalProps {
+    id: number;
+    tipo: string;
+    latitude: number;
+    longitude: number;
+}
 
 const TelaPrincipal = () => {
     const navigation = useNavigation();
     const [initialPosition, setInitialPosition] = useState<[number, number]>([0, 0]);
+    const [animais, setAnimais] = useState([]);
     const route = useRoute();
 
     useEffect(() => {
@@ -26,7 +35,14 @@ const TelaPrincipal = () => {
         loadPosition();
     }, []);
 
+    useFocusEffect(() => {
+        api.get('animal').then(response => {
+            setAnimais(response.data);
+        });
+    });
+
     function handleNavigateBack() {
+        AsyncStorage.removeItem('idUsuario');
         navigation.goBack();
     }
 
@@ -49,7 +65,7 @@ const TelaPrincipal = () => {
                 <Image source={require('../../assets/back.png')} />
             </TouchableOpacity>
             <TouchableOpacity onPress={handleNavigateToNewAnimal} style={styles.addAnimalButton}>
-                <Image  source={require('../../assets/add.png')} />
+                <Image source={require('../../assets/add.png')} />
             </TouchableOpacity>
             <TouchableOpacity onPress={handleNavigateToStatisticData} style={styles.seeStatisticData}>
                 <Image source={require('../../assets/info.png')} />
@@ -66,7 +82,23 @@ const TelaPrincipal = () => {
                     }}
                     mapType="hybrid"
                 >
-                    
+                    {animais.map((animal: AnimalProps) => {
+                        return (
+                            animal.tipo === 'Cachorro' ?
+                                <Marker key={animal.id}
+                                    icon={require('../../assets/dog.png')}
+                                    coordinate={{
+                                        latitude: animal.latitude,
+                                        longitude: animal.longitude
+                                    }} /> :
+                                <Marker key={animal.id}
+                                    icon={require('../../assets/cat.png')}
+                                    coordinate={{
+                                        latitude: animal.latitude,
+                                        longitude: animal.longitude
+                                    }} />
+                        );
+                    })}
                 </MapView>
             )}
         </>
