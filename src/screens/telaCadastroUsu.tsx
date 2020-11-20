@@ -7,6 +7,7 @@ import api from '../services/api';
 
 const TelaCadastroUsu = () => {
   const [nome, setNome] = useState('');
+  const [cpf, setCpf] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const navigation = useNavigation();
@@ -14,6 +15,7 @@ const TelaCadastroUsu = () => {
     function handleRegisterNewUser() {
       api.post('usuario', {
         nome,
+        cpf,
         senha,
         email
       }).then(() => {
@@ -33,6 +35,13 @@ const TelaCadastroUsu = () => {
           <View style={styles.inputView}>
             <Image source={require('../../assets/carteira-de-identidade.png')} style={styles.ImageStyle} />
             <TextInput value={nome} onChangeText={setNome} keyboardType="default" placeholder="Informe seu Nome..." style={{ flex: 1 }} />
+          </View>
+        </View>
+        <View style={styles.viewContainer}>
+          <Text style={styles.textInput}>CPF</Text>
+          <View style={styles.inputView}>
+            <Image source={require('../../assets/carteira-de-identidade.png')} style={styles.ImageStyle} />
+            <TextInput value={cpf} onChangeText={setCpf} keyboardType="number-pad" placeholder="Informe seu CPF..." style={{ flex: 1 }} />
           </View>
         </View>
         <View style={styles.viewContainer}>

@@ -91,7 +91,6 @@ const TelaCadastroAni = () => {
         latitude: position[0],
         longitude: position[1],
         imagem,
-        ativo: true,
         idUsuario
     }
 
@@ -124,7 +123,7 @@ const TelaCadastroAni = () => {
                 allowsEditing: true,
                 aspect: [4, 3],
                 base64: true,
-                quality: 1,
+                quality: 0,
             });
 
             if (result.cancelled) {

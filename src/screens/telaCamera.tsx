@@ -35,7 +35,8 @@ const TelaCamera = () => {
     async function takePicture() {
         if (camRef) {
             const data = await camRef.current.takePictureAsync({
-                base64: true
+                base64: true,
+                quality: 0
             });
             setCapturedPhoto(data.base64);
             setOpen(true);

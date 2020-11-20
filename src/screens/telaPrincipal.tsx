@@ -15,7 +15,7 @@ interface AnimalProps {
 const TelaPrincipal = () => {
     const navigation = useNavigation();
     const [initialPosition, setInitialPosition] = useState<[number, number]>([0, 0]);
-    const [animais, setAnimais] = useState([]);
+    const [animais, setAnimais] = useState<AnimalProps[]>([]);
     const route = useRoute();
 
     useEffect(() => {
@@ -35,11 +35,12 @@ const TelaPrincipal = () => {
         loadPosition();
     }, []);
 
-    useFocusEffect(() => {
+    useEffect(() => {
         api.get('animal').then(response => {
             setAnimais(response.data);
+            console.log(animais);
         });
-    });
+    }, []);
 
     function handleNavigateBack() {
         AsyncStorage.removeItem('idUsuario');
@@ -84,19 +85,12 @@ const TelaPrincipal = () => {
                 >
                     {animais.map((animal: AnimalProps) => {
                         return (
-                            animal.tipo === 'Cachorro' ?
                                 <Marker key={animal.id}
                                     icon={require('../../assets/dog.png')}
                                     coordinate={{
                                         latitude: animal.latitude,
                                         longitude: animal.longitude
-                                    }} /> :
-                                <Marker key={animal.id}
-                                    icon={require('../../assets/cat.png')}
-                                    coordinate={{
-                                        latitude: animal.latitude,
-                                        longitude: animal.longitude
-                                    }} />
+                                    }} /> 
                         );
                     })}
                 </MapView>
