@@ -90,21 +90,16 @@ const TelaCadastroAni = () => {
         descricao,
         latitude: position[0],
         longitude: position[1],
+        ativo: 1,
         imagem,
         idUsuario
     }
 
     async function handleCreateNewAnimal() {
-        try {
-            await api.post('animal', data);
-            alert('Animal Adicionado com Sucesso!');
-            AsyncStorage.removeItem('fotoAnimal');
-            setImagem('');
+        await api.post('animal', data);
+            alert('Animal Cadastrado com Sucesso!');
+            AsyncStorage.removeItem('fotoAnimal');    
             navigation.goBack();
-        } catch (e) {
-            alert('Por favor, verifique sua conexão e tente novamente!');
-        }
-
     }
 
     function handleOpenCamera() {

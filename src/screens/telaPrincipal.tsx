@@ -35,12 +35,11 @@ const TelaPrincipal = () => {
         loadPosition();
     }, []);
 
-    useEffect(() => {
+    useFocusEffect(() => {
         api.get('animal').then(response => {
             setAnimais(response.data);
-            console.log(animais);
         });
-    }, []);
+    });
 
     function handleNavigateBack() {
         AsyncStorage.removeItem('idUsuario');
@@ -85,12 +84,20 @@ const TelaPrincipal = () => {
                 >
                     {animais.map((animal: AnimalProps) => {
                         return (
+                            animal.tipo === "Cachorro" ?
                                 <Marker key={animal.id}
                                     icon={require('../../assets/dog.png')}
                                     coordinate={{
                                         latitude: animal.latitude,
                                         longitude: animal.longitude
-                                    }} /> 
+                                    }} onPress={handleNavigateToAnimalSelec} />
+                                :
+                                <Marker key={animal.id}
+                                    icon={require('../../assets/cat.png')}
+                                    coordinate={{
+                                        latitude: animal.latitude,
+                                        longitude: animal.longitude
+                                    }} onPress={handleNavigateToAnimalSelec} />
                         );
                     })}
                 </MapView>
