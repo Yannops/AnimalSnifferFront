@@ -1,22 +1,56 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, StyleSheet, TouchableOpacity, View, StatusBar, ScrollView, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import Header from '../components/Header';
+import api from '../services/api';
+
+interface DetalheAnimal {
+    id: number;
+}
+
+interface AnimalProps {
+    id: number;
+    tipo: string;
+    raca: string;
+    sexo: string;
+    descricao: string;
+    foto: string;
+}
 
 const TelaAnimalSelec = () => {
+    const route = useRoute();
     const navigation = useNavigation();
     const [avaliar, setAvaliar] = useState(0);
+    const [animal, setAnimal] = useState<AnimalProps>();
+
+    const params = route.params as DetalheAnimal;
 
     function handleNavigateBack() {
         navigation.goBack();
     }
 
-    function handleNavigateToDetail() {
-        navigation.navigate('TelaDetalhesAnimal');
+    function handleDeleteAnimal() {
+        api.delete(`animal/${params.id}`);
+        alert('Você acaba de ajudar á um animal, Parabéns!');
+        navigation.goBack();
     }
 
     function handleIncrementAvaliarAnimal() {
         setAvaliar(avaliar + 1);
+    }
+
+    useEffect(() => {
+        api.get(`animal/${params.id}`).then(response => {
+            setAnimal(response.data);
+        });
+    }, [params.id]);
+
+    if (!animal) {
+        return (
+            <View style={{flex: 1, justifyContent: "center", alignContent: 'center'}}>
+                <Image source={require('../../assets/carregando.jpg')} />
+            </View>
+        );
     }
 
     return (
@@ -30,25 +64,24 @@ const TelaAnimalSelec = () => {
                 </View>
                 <View style={styles.viewContainer}>
                     <Text style={styles.textInput}>Tipo de Animal:</Text>
-                    <Text style={styles.textDetail}>Cachorro</Text>
+                    <Text style={styles.textDetail}>{animal.tipo}</Text>
                 </View>
                 <View style={styles.viewContainer}>
                     <Text style={styles.textInput}>Raça:</Text>
-                    <Text style={styles.textDetail}>Pitbull</Text>
+                    <Text style={styles.textDetail}>{animal.raca}</Text>
                 </View>
                 <View style={styles.viewContainer}>
                     <Text style={styles.textInput}>Sexo:</Text>
-                    <Text style={styles.textDetail}>Macho</Text>
+                    <Text style={styles.textDetail}>{animal.sexo}</Text>
                 </View>
                 <View style={styles.viewContainer}>
                     <Text style={styles.textInput}>Descrição do Animal:</Text>
-                    <Text style={{ ...styles.textDetail, height: 200 }}>Animal encontrado perto da praça, grande porte, no entando inofensivo!</Text>
+                    <Text style={{ ...styles.textDetail, height: 200 }}>{animal.descricao}</Text>
                 </View>
                 <Text style={styles.textInput}>Imagem do Animal</Text>
-                <Image style={styles.imagemContainer} source={require('../../assets/teste.png')} />
+                <Image style={styles.imagemContainer} source={{ uri: "data:image/png;base64," + animal.foto }} />
                 <TouchableOpacity onPress={handleNavigateBack}></TouchableOpacity>
-                <TouchableOpacity onPress={handleNavigateBack}></TouchableOpacity>
-                <TouchableOpacity style={{ ...styles.button, backgroundColor: "#99b3ff" }} >
+                <TouchableOpacity onPress={() => handleDeleteAnimal(animal.id)} style={{ ...styles.button, backgroundColor: "#99b3ff" }} >
                     <Text style={styles.buttonText}>Recolher Animal</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ ...styles.button, backgroundColor: '#fa5760' }} onPress={handleIncrementAvaliarAnimal}>

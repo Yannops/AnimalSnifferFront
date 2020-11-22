@@ -95,11 +95,11 @@ const TelaCadastroAni = () => {
         idUsuario
     }
 
-    async function handleCreateNewAnimal() {
-        await api.post('animal', data);
-            alert('Animal Cadastrado com Sucesso!');
-            AsyncStorage.removeItem('fotoAnimal');    
-            navigation.goBack();
+    function handleCreateNewAnimal() {
+        api.post('animal', data);
+        alert('Animal Registrado com Sucesso!');
+        AsyncStorage.removeItem('fotoAnimal');
+        navigation.goBack();
     }
 
     function handleOpenCamera() {
@@ -118,7 +118,7 @@ const TelaCadastroAni = () => {
                 allowsEditing: true,
                 aspect: [4, 3],
                 base64: true,
-                quality: 0,
+                quality: 1,
             });
 
             if (result.cancelled) {
@@ -126,7 +126,7 @@ const TelaCadastroAni = () => {
             }
 
             AsyncStorage.removeItem("fotoAnimal");
-            setImagem(result.base64);
+            setImagem(`data:image/png;base64,${result.base64}`);
         } catch (e) {
             console.log(e)
         }
@@ -187,7 +187,7 @@ const TelaCadastroAni = () => {
                             <TouchableOpacity style={styles.buttonDeleteImage} onPress={handleClearImage}>
                                 <Feather name="x" size={40} color="red" />
                             </TouchableOpacity>
-                            <Image style={styles.imagemContainer} source={{ uri: "data:image/png;base64," + imagem }} />
+                            <Image style={styles.imagemContainer} source={{ uri: imagem }} />
                         </>
                         : null
                     }
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
         width: '80%',
         height: 400,
         resizeMode: 'cover',
-        borderRadius: 8,
+        borderRadius: 50,
         marginBottom: 40,
     },
 
@@ -301,15 +301,10 @@ const styles = StyleSheet.create({
     buttonDeleteImage: {
         zIndex: 1,
         position: "relative",
-        top: '8%',
+        top: '6%',
         left: '32%',
         width: 44,
         height: 44,
-        backgroundColor: '#fff',
-        borderRadius: 20,
-        borderColor: '#D3E1E5',
-        borderStyle: 'solid',
-        borderWidth: 2
     }
 });
 

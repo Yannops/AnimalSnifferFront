@@ -50,8 +50,8 @@ const TelaPrincipal = () => {
         navigation.navigate('TelaCadastroAni');
     }
 
-    function handleNavigateToAnimalSelec() {
-        navigation.navigate('TelaAnimalSelec');
+    function handleNavigateToAnimalSelec(id: number) {
+        navigation.navigate('TelaAnimalSelec', { id });
     }
 
     function handleNavigateToStatisticData() {
@@ -84,20 +84,14 @@ const TelaPrincipal = () => {
                 >
                     {animais.map((animal: AnimalProps) => {
                         return (
-                            animal.tipo === "Cachorro" ?
-                                <Marker key={animal.id}
-                                    icon={require('../../assets/dog.png')}
-                                    coordinate={{
-                                        latitude: animal.latitude,
-                                        longitude: animal.longitude
-                                    }} onPress={handleNavigateToAnimalSelec} />
-                                :
-                                <Marker key={animal.id}
-                                    icon={require('../../assets/cat.png')}
-                                    coordinate={{
-                                        latitude: animal.latitude,
-                                        longitude: animal.longitude
-                                    }} onPress={handleNavigateToAnimalSelec} />
+                            <Marker key={animal.id}
+                                icon={animal.tipo === "Cachorro" ?
+                                    require('../../assets/dog.png') :
+                                    require('../../assets/cat.png')}
+                                coordinate={{
+                                    latitude: animal.latitude,
+                                    longitude: animal.longitude
+                                }} onPress={() => handleNavigateToAnimalSelec(animal.id)} />
                         );
                     })}
                 </MapView>

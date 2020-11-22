@@ -34,17 +34,17 @@ const TelaCamera = () => {
 
     async function takePicture() {
         if (camRef) {
-            const data = await camRef.current.takePictureAsync({
+            const result = await camRef.current.takePictureAsync({
                 base64: true,
-                quality: 0
+                quality: 1
             });
-            setCapturedPhoto(data.base64);
+            setCapturedPhoto(`data:image/png;base64,${result.base64}`);
             setOpen(true);
         }
     }
 
-    async function handlePutPhotoOnRegister() {
-        await AsyncStorage.setItem('fotoAnimal', capturedPhoto);
+    function handlePutPhotoOnRegister() {
+        AsyncStorage.setItem('fotoAnimal', capturedPhoto);
         setOpen(false);
         navigation.goBack();
     }
@@ -65,7 +65,7 @@ const TelaCamera = () => {
                 <Text style={{ marginTop: 70, textAlign: 'center', fontSize: 20, fontWeight: 'bold', color: '#fff' }}>Tire uma foto clara do animal</Text>
                 <View style={{ flex: 1, backgroundColor: 'transparent', flexDirection: 'row' }}>
                     <TouchableOpacity onPress={goBack}></TouchableOpacity>
-                    <TouchableOpacity style={{ position: "absolute", bottom: 20, left: 20 }} onPress={() => toogleChangeCamera()}>
+                    <TouchableOpacity style={{ position: "absolute", bottom: 20, left: 20 }} onPress={toogleChangeCamera}>
                         <MaterialCommunityIcons name="camera-switch" color="#fff" size={35} />
                     </TouchableOpacity>
                 </View>
@@ -75,11 +75,11 @@ const TelaCamera = () => {
                 {capturedPhoto !== '' ?
                     <Modal animationType="slide" transparent={false} visible={open}>
                         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                            <Image style={{ width: '100%', height: '100%', borderRadius: 20 }} source={{ uri: "data:image/png;base64," + capturedPhoto }} />
-                            <TouchableOpacity style={{ position: 'absolute', left: 70, top: 750 }} onPress={() => handlePutPhotoOnRegister()}>
+                            <Image style={{ width: '100%', height: '100%', borderRadius: 20 }} source={{ uri: capturedPhoto }} />
+                            <TouchableOpacity style={{ position: 'absolute', left: 70, top: 750 }} onPress={handlePutPhotoOnRegister}>
                                 <FontAwesome name="check" size={50} color="green"></FontAwesome>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ position: 'absolute', left: 300, top: 750 }} onPress={() => deleteImage()}>
+                            <TouchableOpacity style={{ position: 'absolute', left: 300, top: 750 }} onPress={deleteImage}>
                                 <FontAwesome name="close" size={50} color="red"></FontAwesome>
                             </TouchableOpacity>
                         </View>
