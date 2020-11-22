@@ -8,8 +8,8 @@ import api from '../services/api';
 interface AnimalProps {
     id: number;
     tipo: string;
-    latitude: number;
-    longitude: number;
+    latitude: string;
+    longitude: string;
 }
 
 const TelaPrincipal = () => {
@@ -89,8 +89,8 @@ const TelaPrincipal = () => {
                                     require('../../assets/dog.png') :
                                     require('../../assets/cat.png')}
                                 coordinate={{
-                                    latitude: animal.latitude,
-                                    longitude: animal.longitude
+                                    latitude: Number(animal.latitude),
+                                    longitude: Number(animal.latitude)
                                 }} onPress={() => handleNavigateToAnimalSelec(animal.id)} />
                         );
                     })}

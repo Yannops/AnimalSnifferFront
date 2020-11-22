@@ -48,7 +48,7 @@ const TelaCadastroAni = () => {
     useFocusEffect(() => {
         (async () => {
             const foto = await AsyncStorage.getItem('fotoAnimal');
-        
+
             if (foto) {
                 setImagem(foto);
             }
@@ -88,16 +88,16 @@ const TelaCadastroAni = () => {
         raca,
         sexo,
         descricao,
-        latitude: position[0],
-        longitude: position[1],
-        ativo: 1,
+        latitude: position[0].toString(),
+        longitude: position[1].toString(),
         imagem,
-        idUsuario
+        ativo: true,
+        idUsuario   
     }
 
-    function handleCreateNewAnimal() {
-        api.post('animal', data);
-        alert('Animal Registrado com Sucesso!');
+    async function handleCreateNewAnimal() {
+        await api.post('animal', data);
+        alert('Animal registrado com sucesso!');
         AsyncStorage.removeItem('fotoAnimal');
         navigation.goBack();
     }
@@ -170,11 +170,11 @@ const TelaCadastroAni = () => {
                         <View style={styles.ratioGroup}>
                             <RadioButton.Group value={sexo} onValueChange={value => setSexo(value)}>
                                 <Text style={styles.ratioGroupText}>Macho</Text>
-                                <RadioButton value="Macho" />
+                                <RadioButton value="M" />
                                 <Text style={styles.ratioGroupText}>Fêmea</Text>
-                                <RadioButton value="Fêmea" />
+                                <RadioButton value="F" />
                                 <Text style={styles.ratioGroupText}>Indefinido</Text>
-                                <RadioButton value="Indefinido" />
+                                <RadioButton value="I" />
                             </RadioButton.Group>
                         </View>
                     </View>
@@ -187,6 +187,7 @@ const TelaCadastroAni = () => {
                             <TouchableOpacity style={styles.buttonDeleteImage} onPress={handleClearImage}>
                                 <Feather name="x" size={40} color="red" />
                             </TouchableOpacity>
+                            <Text style={{ ...styles.textInput, marginBottom: 15, right: '20%' }}>Imagem do Animal</Text>
                             <Image style={styles.imagemContainer} source={{ uri: imagem }} />
                         </>
                         : null
@@ -234,7 +235,7 @@ const styles = StyleSheet.create({
     textInput: {
         fontSize: 20,
         fontFamily: 'Cinzel_700Bold',
-        marginTop: 25
+        marginTop: 10
     },
 
     Picker: {
@@ -301,7 +302,7 @@ const styles = StyleSheet.create({
     buttonDeleteImage: {
         zIndex: 1,
         position: "relative",
-        top: '6%',
+        top: '11%',
         left: '32%',
         width: 44,
         height: 44,

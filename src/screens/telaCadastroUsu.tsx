@@ -12,16 +12,15 @@ const TelaCadastroUsu = () => {
   const [senha, setSenha] = useState('');
   const navigation = useNavigation();
 
-    function handleRegisterNewUser() {
-      api.post('usuario', {
-        nome,
-        cpf,
-        senha,
-        email
-      }).then(() => {
-        alert(`Parabéns ${nome}, agora você é um de nossos usuários`);
-        navigation.goBack();
-      }); 
+  async function handleRegisterNewUser() {
+    await api.post('usuario', {
+      nome,
+      cpf,
+      senha,
+      email
+    });
+    alert(`Parabéns ${nome}, agora você é um de nossos usuários`);
+    navigation.goBack();
   }
 
 
