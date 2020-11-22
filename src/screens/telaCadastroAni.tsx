@@ -92,14 +92,19 @@ const TelaCadastroAni = () => {
         longitude: position[1].toString(),
         imagem,
         ativo: true,
-        idUsuario   
+        idUsuario
     }
 
     async function handleCreateNewAnimal() {
-        await api.post('animal', data);
-        alert('Animal registrado com sucesso!');
-        AsyncStorage.removeItem('fotoAnimal');
-        navigation.goBack();
+        try {
+            await api.post('animal', data);
+            alert('Animal registrado com sucesso!');
+            AsyncStorage.removeItem('fotoAnimal');
+            navigation.goBack();
+        } catch (error) {
+            console.log(error);
+        }
+
     }
 
     function handleOpenCamera() {
@@ -118,7 +123,7 @@ const TelaCadastroAni = () => {
                 allowsEditing: true,
                 aspect: [4, 3],
                 base64: true,
-                quality: 1,
+                quality: 0,
             });
 
             if (result.cancelled) {

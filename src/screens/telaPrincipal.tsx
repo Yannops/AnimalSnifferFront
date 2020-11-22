@@ -90,7 +90,7 @@ const TelaPrincipal = () => {
                                     require('../../assets/cat.png')}
                                 coordinate={{
                                     latitude: Number(animal.latitude),
-                                    longitude: Number(animal.latitude)
+                                    longitude: Number(animal.longitude)
                                 }} onPress={() => handleNavigateToAnimalSelec(animal.id)} />
                         );
                     })}

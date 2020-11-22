@@ -14,7 +14,7 @@ interface AnimalProps {
     raca: string;
     sexo: string;
     descricao: string;
-    foto: string;
+    imagem?: string;
 }
 
 const TelaAnimalSelec = () => {
@@ -79,9 +79,9 @@ const TelaAnimalSelec = () => {
                     <Text style={{ ...styles.textDetail, height: 200 }}>{animal.descricao}</Text>
                 </View>
                 <Text style={styles.textInput}>Imagem do Animal</Text>
-                <Image style={styles.imagemContainer} source={{ uri: "data:image/png;base64," + animal.foto }} />
+                <Image style={styles.imagemContainer} source={{ uri: animal.imagem }} />
                 <TouchableOpacity onPress={handleNavigateBack}></TouchableOpacity>
-                <TouchableOpacity onPress={() => handleDeleteAnimal(animal.id)} style={{ ...styles.button, backgroundColor: "#99b3ff" }} >
+                <TouchableOpacity onPress={handleDeleteAnimal} style={{ ...styles.button, backgroundColor: "#99b3ff" }} >
                     <Text style={styles.buttonText}>Recolher Animal</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ ...styles.button, backgroundColor: '#fa5760' }} onPress={handleIncrementAvaliarAnimal}>
