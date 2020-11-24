@@ -9,7 +9,7 @@ const TelaCamera = () => {
     const [open, setOpen] = useState(false);
     const [type, setType] = useState(Camera.Constants.Type.back);
     const [capturedPhoto, setCapturedPhoto] = useState('');
-    const [haspermission, setHaspermission] = useState(null);
+    const [haspermission, setHaspermission] = useState(false);
     const navigation = useNavigation();
 
 

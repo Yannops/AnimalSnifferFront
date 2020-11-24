@@ -1,15 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, StatusBar } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Header from '../components/Header';
+import api from '../services/api';
+
+interface DadosEstatisticos {
+    Salto: number;
+    Itu: number;
+    Indaiatuba: number;
+    Total: number;
+    Macho: number;
+    Femea: number;
+    Indefinido: number;
+    Cachorro: number;
+    Gato: number;
+    Labrador: number;
+    Rottweiler: number;
+    Golden_Retriever: number;
+    Vira_Lata_Dog: number;
+    Poodle: number;
+    Pastor_Alemao: number;
+    Spitz_Alemão: number;
+    Buldogue: number;
+    Shih_Tzu: number;
+    Maltes: number;
+    Persa: number;
+    Siamês: number;
+    Vira_Lata: number;
+    Siberiano: number;
+    Sphynx: number;
+    Angorá: number;
+    Abissínio: number;
+}
 
 const TelaDadosEstatisticos = () => {
     const navigation = useNavigation();
+    const [dados, setDados] = useState<DadosEstatisticos>();
 
     function handleNavigateBack() {
         navigation.goBack();
     }
+
+    useFocusEffect(() => {
+        api.get('estatistica').then(response => {
+            setDados(response.data);
+        });
+    });
 
     return (
         <>
@@ -18,22 +55,44 @@ const TelaDadosEstatisticos = () => {
             <TouchableOpacity onPress={handleNavigateBack}></TouchableOpacity>
             <ScrollView>
                 <View style={styles.container}>
-                    <Text style={styles.infoTitle}>Total de Animais: 30</Text>
+                    <Text style={styles.infoTitle}>Total de Animais: {dados?.Total}</Text>
                 </View>
                 <View style={styles.container}>
-                    <Text style={styles.infoTitle}>Total de Cachorros: 20</Text>
-                    <Text style={styles.infoText}>Rottweiler: 5</Text>
-                    <Text style={styles.infoText}>Malteses: 7</Text>
-                    <Text style={styles.infoText}>Machos: 5</Text>
-                    <Text style={styles.infoText}>Fêmeas: 5</Text>
-                    <Text style={styles.infoText}>Indefinidos: 1</Text>
+                    <Text style={styles.infoTitle}>Total por Cidades</Text>
+                    <Text style={styles.infoText}>Itu:  {dados?.Itu}</Text>
+                    <Text style={styles.infoText}>Salto:  {dados?.Salto}</Text>
+                    <Text style={styles.infoText}>Indaiatuba: {dados?.Indaiatuba}</Text>
                 </View>
                 <View style={styles.container}>
-                    <Text style={styles.infoTitle}>Total de Gatos: 12</Text>
-                    <Text style={styles.infoText}>Fêmeas: 5</Text>
-                    <Text style={styles.infoText}>Machos: 1</Text>
-                    <Text style={styles.infoText}>Persas: 4</Text>
-                    <Text style={styles.infoText}>Siameses: 16</Text>
+                    <Text style={styles.infoTitle}>Total por Sexo</Text>
+                    <Text style={styles.infoText}>Macho:  {dados?.Macho}</Text>
+                    <Text style={styles.infoText}>Fêmea:  {dados?.Femea}</Text>
+                    <Text style={styles.infoText}>Indefinido: {dados?.Indefinido}</Text>
+                </View>
+                <View style={styles.container}>
+                    <Text style={styles.infoTitle}>Total de Cachorros: {dados?.Cachorro}</Text>
+                    <Text style={styles.infoText}>Labrador: {dados?.Labrador}</Text>
+                    <Text style={styles.infoText}>Rottweiler: {dados?.Rottweiler}</Text>
+                    <Text style={styles.infoText}>Golden Retriever: </Text>
+                    <Text style={styles.infoText}>Vira Lata: </Text>
+                    <Text style={styles.infoText}>Poodle: {dados?.Poodle}</Text>
+                    <Text style={styles.infoText}>Pastor Alemão: </Text>
+                    <Text style={styles.infoText}>Spitz Alemão: </Text>
+                    <Text style={styles.infoText}>Buldogue: {dados?.Buldogue}</Text>
+                    <Text style={styles.infoText}>Shih Tzu: </Text>
+                    <Text style={styles.infoText}>Maltês: {dados?.Maltes}</Text>
+                    <Text style={styles.infoText}>Indefinido: </Text>
+                </View>
+                <View style={styles.container}>
+                    <Text style={styles.infoTitle}>Total de Gatos: {dados?.Gato}</Text>
+                    <Text style={styles.infoText}>Persa: {dados?.Persa}</Text>
+                    <Text style={styles.infoText}>Siamês: {dados?.Siamês}</Text>
+                    <Text style={styles.infoText}>Vira Lata: </Text>
+                    <Text style={styles.infoText}>Siberiano: {dados?.Siberiano}</Text>
+                    <Text style={styles.infoText}>Sphynx: {dados?.Sphynx}</Text>
+                    <Text style={styles.infoText}>Angorá: {dados?.Angorá}</Text>
+                    <Text style={styles.infoText}>Abissínio: {dados?.Abissínio}</Text>
+                    <Text style={styles.infoText}>Indefinido: </Text>
                 </View>
             </ScrollView>
         </>

@@ -72,7 +72,11 @@ const TelaAnimalSelec = () => {
                 </View>
                 <View style={styles.viewContainer}>
                     <Text style={styles.textInput}>Sexo:</Text>
-                    <Text style={styles.textDetail}>{animal.sexo}</Text>
+                    <Text style={styles.textDetail}>{animal.sexo === "F" ? 
+                    'Fêmea' : 
+                    animal.sexo === "M" ?
+                    "Macho" : 
+                    "Indefinido"}</Text>
                 </View>
                 <View style={styles.viewContainer}>
                     <Text style={styles.textInput}>Descrição do Animal:</Text>
