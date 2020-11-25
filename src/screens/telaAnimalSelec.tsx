@@ -14,7 +14,7 @@ interface AnimalProps {
     raca: string;
     sexo: string;
     descricao: string;
-    imagem?: string;
+    imagem: string;
 }
 
 const TelaAnimalSelec = () => {
@@ -46,11 +46,7 @@ const TelaAnimalSelec = () => {
     }, [params.id]);
 
     if (!animal) {
-        return (
-            <View style={{flex: 1, justifyContent: "center", alignContent: 'center'}}>
-                <Image source={require('../../assets/carregando.jpg')} />
-            </View>
-        );
+        return null;
     }
 
     return (

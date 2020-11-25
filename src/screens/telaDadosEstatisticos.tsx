@@ -8,7 +8,7 @@ import api from '../services/api';
 interface DadosEstatisticos {
     Salto: number;
     Itu: number;
-    Indaiatuba: number;
+    Sorocaba: number;
     Total: number;
     Macho: number;
     Femea: number;
@@ -17,21 +17,23 @@ interface DadosEstatisticos {
     Gato: number;
     Labrador: number;
     Rottweiler: number;
-    Golden_Retriever: number;
-    Vira_Lata_Dog: number;
+    GoldenRetriever: number;
+    ViraLataCachorro: number;
     Poodle: number;
-    Pastor_Alemao: number;
-    Spitz_Alemão: number;
+    PastorAlemao: number;
+    SpitzAlemao: number;
     Buldogue: number;
-    Shih_Tzu: number;
+    ShihTzu: number;
     Maltes: number;
+    IndefinidoCachorro: number;
     Persa: number;
-    Siamês: number;
-    Vira_Lata: number;
+    Siames: number;
+    ViraLataGato: number;
     Siberiano: number;
     Sphynx: number;
-    Angorá: number;
-    Abissínio: number;
+    Angora: number;
+    Abissinio: number;
+    IndefinidoGato: number;
 }
 
 const TelaDadosEstatisticos = () => {
@@ -61,7 +63,7 @@ const TelaDadosEstatisticos = () => {
                     <Text style={styles.infoTitle}>Total por Cidades</Text>
                     <Text style={styles.infoText}>Itu:  {dados?.Itu}</Text>
                     <Text style={styles.infoText}>Salto:  {dados?.Salto}</Text>
-                    <Text style={styles.infoText}>Indaiatuba: {dados?.Indaiatuba}</Text>
+                    <Text style={styles.infoText}>Sorocaba: {dados?.Sorocaba}</Text>
                 </View>
                 <View style={styles.container}>
                     <Text style={styles.infoTitle}>Total por Sexo</Text>
@@ -73,26 +75,26 @@ const TelaDadosEstatisticos = () => {
                     <Text style={styles.infoTitle}>Total de Cachorros: {dados?.Cachorro}</Text>
                     <Text style={styles.infoText}>Labrador: {dados?.Labrador}</Text>
                     <Text style={styles.infoText}>Rottweiler: {dados?.Rottweiler}</Text>
-                    <Text style={styles.infoText}>Golden Retriever: </Text>
-                    <Text style={styles.infoText}>Vira Lata: </Text>
+                    <Text style={styles.infoText}>Golden Retriever: {dados?.GoldenRetriever}</Text>
+                    <Text style={styles.infoText}>Vira Lata: {dados?.ViraLataCachorro}</Text>
                     <Text style={styles.infoText}>Poodle: {dados?.Poodle}</Text>
-                    <Text style={styles.infoText}>Pastor Alemão: </Text>
-                    <Text style={styles.infoText}>Spitz Alemão: </Text>
+                    <Text style={styles.infoText}>Pastor Alemão: {dados?.PastorAlemao}</Text>
+                    <Text style={styles.infoText}>Spitz Alemão: {dados?.SpitzAlemao}</Text>
                     <Text style={styles.infoText}>Buldogue: {dados?.Buldogue}</Text>
-                    <Text style={styles.infoText}>Shih Tzu: </Text>
+                    <Text style={styles.infoText}>Shih Tzu: {dados?.ShihTzu}</Text>
                     <Text style={styles.infoText}>Maltês: {dados?.Maltes}</Text>
-                    <Text style={styles.infoText}>Indefinido: </Text>
+                    <Text style={styles.infoText}>Indefinido: {dados?.IndefinidoCachorro}</Text>
                 </View>
                 <View style={styles.container}>
                     <Text style={styles.infoTitle}>Total de Gatos: {dados?.Gato}</Text>
                     <Text style={styles.infoText}>Persa: {dados?.Persa}</Text>
-                    <Text style={styles.infoText}>Siamês: {dados?.Siamês}</Text>
-                    <Text style={styles.infoText}>Vira Lata: </Text>
+                    <Text style={styles.infoText}>Siamês: {dados?.Siames}</Text>
+                    <Text style={styles.infoText}>Vira Lata: {dados?.ViraLataGato}</Text>
                     <Text style={styles.infoText}>Siberiano: {dados?.Siberiano}</Text>
                     <Text style={styles.infoText}>Sphynx: {dados?.Sphynx}</Text>
-                    <Text style={styles.infoText}>Angorá: {dados?.Angorá}</Text>
-                    <Text style={styles.infoText}>Abissínio: {dados?.Abissínio}</Text>
-                    <Text style={styles.infoText}>Indefinido: </Text>
+                    <Text style={styles.infoText}>Angorá: {dados?.Angora}</Text>
+                    <Text style={styles.infoText}>Abissínio: {dados?.Abissinio}</Text>
+                    <Text style={styles.infoText}>Indefinido: {dados?.IndefinidoGato}</Text>
                 </View>
             </ScrollView>
         </>
