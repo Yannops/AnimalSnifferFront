@@ -109,16 +109,17 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         margin: 20,
         borderRadius: 8,
-        shadowOffset: { width: 1, height: 1, },
-        shadowColor: 'black',
+        shadowOffset: { width: 1, height: 4, },
+        shadowColor: '#27B07D',
         shadowOpacity: 1,
     },
 
     infoText: {
         fontFamily: 'Cinzel_400Regular',
-        lineHeight: 50,
-        fontSize: 18,
+        lineHeight: 40,
+        fontSize: 22,
         textAlign: 'center',
+        marginBottom: 20
     },
 
     infoTitle: {
