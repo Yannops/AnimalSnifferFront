@@ -6,7 +6,6 @@ import TelaPrincipal from "../screens/telaPrincipal";
 import TelaCadastroAni from '../screens/telaCadastroAni';
 import TelaAnimalSelec from '../screens/telaAnimalSelec';
 import TelaDadosEstatisticos from '../screens/telaDadosEstatisticos';
-import TelaCamera from '../screens/telaCamera';
 import { createStackNavigator } from "@react-navigation/stack";
 
 
@@ -22,7 +21,6 @@ const Routes = () => {
       <Stack.Screen name="TelaCadastroAni" component={TelaCadastroAni} />
       <Stack.Screen name="TelaAnimalSelec" component={TelaAnimalSelec} />
       <Stack.Screen name="TelaDadosEstatisticos" component={TelaDadosEstatisticos} />
-      <Stack.Screen name="TelaCamera" component={TelaCamera} />
     </Stack.Navigator>
   );
 }

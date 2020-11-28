@@ -47,12 +47,6 @@ const TelaCadastroAni = () => {
 
     useFocusEffect(() => {
         (async () => {
-            const foto = await AsyncStorage.getItem('fotoAnimal');
-
-            if (foto) {
-                setImagem(foto);
-            }
-
             const id = await AsyncStorage.getItem("idUsuario");
             setIdUsuario(Number(id));
         })();
@@ -99,7 +93,6 @@ const TelaCadastroAni = () => {
         try {
             await api.post('animal', data);
             alert('Animal registrado com sucesso!');
-            AsyncStorage.removeItem('fotoAnimal');
             navigation.goBack();
         } catch (error) {
             console.log(error);
@@ -107,12 +100,7 @@ const TelaCadastroAni = () => {
 
     }
 
-    function handleOpenCamera() {
-        navigation.navigate('TelaCamera');
-    }
-
     function handleClearImage() {
-        AsyncStorage.removeItem('fotoAnimal');
         setImagem('');
     }
 
@@ -129,8 +117,6 @@ const TelaCadastroAni = () => {
             if (result.cancelled) {
                 return;
             }
-
-            AsyncStorage.removeItem("fotoAnimal");
             setImagem(`data:image/png;base64,${result.base64}`);
         } catch (e) {
             console.log(e)
@@ -199,9 +185,6 @@ const TelaCadastroAni = () => {
                     }
                     <TouchableOpacity onPress={() => pickImage()} style={{ ...styles.button, backgroundColor: '#7D7B7A', }}>
                         <Text style={styles.buttonText}>Abrir Galeria</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={handleOpenCamera} style={{ ...styles.button, backgroundColor: '#7D7B7A', }}>
-                        <Text style={styles.buttonText}>Abrir Câmera</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={handleCreateNewAnimal}>
                         <Text style={styles.buttonText}>Cadastrar</Text>

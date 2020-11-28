@@ -15,19 +15,30 @@ interface AnimalProps {
     sexo: string;
     descricao: string;
     imagem: string;
+    avaliacoes: [Avaliacao]
+}
+
+interface Avaliacao {
+    idAnimal: number;
+    idUsuario: number;
 }
 
 const TelaAnimalSelec = () => {
     const route = useRoute();
     const navigation = useNavigation();
-    const [avaliar, setAvaliar] = useState(0);
     const [animal, setAnimal] = useState<AnimalProps>();
     const [idUsuario, setIdUsuario] = useState(0);
+    const [usuaAvaliou, setUsuaAvaliou] = useState(false);
 
     const params = route.params as DetalheAnimal;
 
     function handleNavigateBack() {
         navigation.goBack();
+    }
+
+    const data = {
+        idAnimal: params.id,
+        idUsuario
     }
 
     function handleDeleteAnimal() {
@@ -36,28 +47,56 @@ const TelaAnimalSelec = () => {
         navigation.goBack();
     }
 
-    async function handleRateAnimal() {
+    function handleRateAnimal() {
         try {
-            api.post('avaliacao', {
-                idAnimal: params.id,
-                idUsuario: Number(await AsyncStorage.getItem("idUsuario"))
-            });
-            alert('Sua avaliação foi registrada com sucesso!');   
+            api.post('avaliacao', data);
+            alert('Sua avaliação foi registrada com sucesso!');
+
+            let animalObj: any = {
+
+            }
+
+            animalObj['idAnimal'] = animal?.id
+            animalObj['idUsuario'] = idUsuario
+
+            var animalopcao = animal;
+
+            animalopcao?.avaliacoes.push(animalObj);
+
+            setAnimal(animalopcao);
+
         } catch (error) {
             console.log(error)
-        }    
+        }
+    }
+
+    function handleUnrateAnimal() {
+        try {
+            api.put('avaliacao', data);
+            alert('Sua avaliação foi retirada com sucesso!');
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     useEffect(() => {
         api.get(`animal/${params.id}`).then(response => {
             setAnimal(response.data);
+
+            const result = animal?.avaliacoes.find((avaliacao: any) => avaliacao.idUsuario === idUsuario);
+            if (result === undefined) {
+                setUsuaAvaliou(false);
+            } else {
+                setUsuaAvaliou(true);
+            }
         });
-    }, [params.id]);
+    }, [animal]);
 
     useFocusEffect(() => {
-        api.get(`avaliacao/${params.id}`).then(response => {
-            setAvaliar(response.data);
-        });
+        (async () => {
+            const id = await AsyncStorage.getItem("idUsuario");
+            setIdUsuario(Number(id));
+        })();
     });
 
     if (!animal) {
@@ -71,7 +110,7 @@ const TelaAnimalSelec = () => {
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.InfoAvalContainer}>
                     <Text style={styles.texts}>Total de Avaliações: </Text>
-                    <Text style={styles.texts}>{avaliar} pessoas avaliaram</Text>
+                    <Text style={styles.texts}>{animal.avaliacoes.length !== null ? animal.avaliacoes.length : 0} pessoas avaliaram</Text>
                 </View>
                 <View style={styles.viewContainer}>
                     <Text style={styles.textInput}>Tipo de Animal:</Text>
@@ -83,11 +122,11 @@ const TelaAnimalSelec = () => {
                 </View>
                 <View style={styles.viewContainer}>
                     <Text style={styles.textInput}>Sexo:</Text>
-                    <Text style={styles.textDetail}>{animal.sexo === "F" ? 
-                    'Fêmea' : 
-                    animal.sexo === "M" ?
-                    "Macho" : 
-                    "Indefinido"}</Text>
+                    <Text style={styles.textDetail}>{animal.sexo === "F" ?
+                        'Fêmea' :
+                        animal.sexo === "M" ?
+                            "Macho" :
+                            "Indefinido"}</Text>
                 </View>
                 <View style={styles.viewContainer}>
                     <Text style={styles.textInput}>Descrição do Animal:</Text>
@@ -99,8 +138,8 @@ const TelaAnimalSelec = () => {
                 <TouchableOpacity onPress={handleDeleteAnimal} style={{ ...styles.button, backgroundColor: "#99b3ff" }} >
                     <Text style={styles.buttonText}>Recolher Animal</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ ...styles.button, backgroundColor: '#fa5760' }} onPress={handleRateAnimal}>
-                    <Text style={styles.buttonText}>Avaliar Animal</Text>
+                <TouchableOpacity style={{ ...styles.button, backgroundColor: '#fa5760' }} onPress={!usuaAvaliou ? handleRateAnimal : handleUnrateAnimal}>
+                    <Text style={styles.buttonText}>{!usuaAvaliou ? 'Avaliar Animal' : 'Retirar Avaliação'}</Text>
                 </TouchableOpacity>
             </ScrollView>
         </>
