@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Text, StyleSheet, TouchableOpacity, View, StatusBar, ScrollView, Image } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { Text, StyleSheet, TouchableOpacity, View, StatusBar, ScrollView, Image, AsyncStorage } from 'react-native';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import Header from '../components/Header';
 import api from '../services/api';
 
@@ -22,6 +22,7 @@ const TelaAnimalSelec = () => {
     const navigation = useNavigation();
     const [avaliar, setAvaliar] = useState(0);
     const [animal, setAnimal] = useState<AnimalProps>();
+    const [idUsuario, setIdUsuario] = useState(0);
 
     const params = route.params as DetalheAnimal;
 
@@ -35,8 +36,16 @@ const TelaAnimalSelec = () => {
         navigation.goBack();
     }
 
-    function handleIncrementAvaliarAnimal() {
-        setAvaliar(avaliar + 1);
+    async function handleRateAnimal() {
+        try {
+            api.post('avaliacao', {
+                idAnimal: params.id,
+                idUsuario: Number(await AsyncStorage.getItem("idUsuario"))
+            });
+            alert('Sua avaliação foi registrada com sucesso!');   
+        } catch (error) {
+            console.log(error)
+        }    
     }
 
     useEffect(() => {
@@ -44,6 +53,12 @@ const TelaAnimalSelec = () => {
             setAnimal(response.data);
         });
     }, [params.id]);
+
+    useFocusEffect(() => {
+        api.get(`avaliacao/${params.id}`).then(response => {
+            setAvaliar(response.data);
+        });
+    });
 
     if (!animal) {
         return null;
@@ -84,7 +99,7 @@ const TelaAnimalSelec = () => {
                 <TouchableOpacity onPress={handleDeleteAnimal} style={{ ...styles.button, backgroundColor: "#99b3ff" }} >
                     <Text style={styles.buttonText}>Recolher Animal</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ ...styles.button, backgroundColor: '#fa5760' }} onPress={handleIncrementAvaliarAnimal}>
+                <TouchableOpacity style={{ ...styles.button, backgroundColor: '#fa5760' }} onPress={handleRateAnimal}>
                     <Text style={styles.buttonText}>Avaliar Animal</Text>
                 </TouchableOpacity>
             </ScrollView>
