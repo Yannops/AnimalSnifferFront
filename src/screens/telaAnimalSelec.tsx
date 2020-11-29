@@ -51,20 +51,6 @@ const TelaAnimalSelec = () => {
         try {
             api.post('avaliacao', data);
             alert('Sua avaliação foi registrada com sucesso!');
-
-            let animalObj: any = {
-
-            }
-
-            animalObj['idAnimal'] = animal?.id
-            animalObj['idUsuario'] = idUsuario
-
-            var animalopcao = animal;
-
-            animalopcao?.avaliacoes.push(animalObj);
-
-            setAnimal(animalopcao);
-
         } catch (error) {
             console.log(error)
         }

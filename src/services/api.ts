@@ -6,7 +6,7 @@ http://animalsniffer.azurewebsites.net*/
 /*para testes usar com o NGROK: ngrok http https://localhost:44350 -host-header="localhost:44350"*/
 
 const api = axios.create({
-    baseURL: 'https://fb5056d79d0b.ngrok.io'
+    baseURL: 'https://ea1feed9c23a.ngrok.io'
 });
 
 export default api;
