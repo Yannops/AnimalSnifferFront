@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Alert, StatusBar, Image, TouchableOpacity, AsyncStorage } from 'react-native';
+import { StyleSheet, Alert, StatusBar, Image, TouchableOpacity, AsyncStorage, View } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import * as Location from 'expo-location';
@@ -84,14 +84,14 @@ const TelaPrincipal = () => {
                 >
                     {animais.map((animal: AnimalProps) => {
                         return (
-                            <Marker key={animal.id}
-                                icon={animal.tipo === "Cachorro" ?
-                                    require('../../assets/dog.png') :
-                                    require('../../assets/cat.png')}
-                                coordinate={{
-                                    latitude: Number(animal.latitude),
-                                    longitude: Number(animal.longitude)
-                                }} onPress={() => handleNavigateToAnimalSelec(animal.id)} />
+                                <Marker key={animal.id}
+                                    icon={animal.tipo === "Cachorro" ?
+                                        require('../../assets/dog.png') :
+                                        require('../../assets/cat.png')}
+                                    coordinate={{
+                                        latitude: Number(animal.latitude),
+                                        longitude: Number(animal.longitude)
+                                    }} onPress={() => handleNavigateToAnimalSelec(animal.id)} />
                         );
                     })}
                 </MapView>

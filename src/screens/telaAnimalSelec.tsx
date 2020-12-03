@@ -69,7 +69,7 @@ const TelaAnimalSelec = () => {
         api.get(`animal/${params.id}`).then(response => {
             setAnimal(response.data);
 
-            const result = animal?.avaliacoes.find((avaliacao: any) => avaliacao.idUsuario === idUsuario);
+            const result = animal?.avaliacoes.find((avaliacao: Avaliacao) => avaliacao.idUsuario === idUsuario);
             if (result === undefined) {
                 setUsuaAvaliou(false);
             } else {

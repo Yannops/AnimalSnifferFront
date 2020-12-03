@@ -28,7 +28,7 @@ interface DadosEstatisticos {
     IndefinidoCachorro: number;
     Persa: number;
     Siames: number;
-    ViraLataGato: number;
+    ViralataGato: number;
     Siberiano: number;
     Sphynx: number;
     Angora: number;
@@ -89,7 +89,7 @@ const TelaDadosEstatisticos = () => {
                     <Text style={styles.infoTitle}>Total de Gatos: {dados?.Gato}</Text>
                     <Text style={styles.infoText}>Persa: {dados?.Persa}</Text>
                     <Text style={styles.infoText}>Siamês: {dados?.Siames}</Text>
-                    <Text style={styles.infoText}>Vira Lata: {dados?.ViraLataGato}</Text>
+                    <Text style={styles.infoText}>Vira Lata: {dados?.ViralataGato}</Text>
                     <Text style={styles.infoText}>Siberiano: {dados?.Siberiano}</Text>
                     <Text style={styles.infoText}>Sphynx: {dados?.Sphynx}</Text>
                     <Text style={styles.infoText}>Angorá: {dados?.Angora}</Text>
